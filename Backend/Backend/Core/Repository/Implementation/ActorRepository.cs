@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Core.Repository.Implementation
 {
-    internal class ActorRepository : IActorRepository
+    public class ActorRepository : IActorRepository
     {
         private readonly DataContext _dataContext;
         private readonly DbSet<Actor> _dbSet;

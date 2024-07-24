@@ -2,7 +2,7 @@
 
 namespace Core.Repository
 {
-    internal interface ISubjectRepository
+    public interface ISubjectRepository
     {
         Subject Get(int sujectId);
 

@@ -31,7 +31,7 @@ namespace Backend.Model
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=192.168.1.100,11433;Database=BookDb;user id=sa;password=@War23ner10;Trusted_Connection=True;ConnectRetryCount=0");
+            optionsBuilder.UseSqlServer(@"Server=192.168.1.100,11433;Database=BookDb;user id=sa;password=@War23ner10;Trusted_Connection=False;TrustServerCertificate=False;Encrypt=false;ConnectRetryCount=0");
         }
     }
 

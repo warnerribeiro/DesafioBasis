@@ -2,7 +2,7 @@
 
 namespace Core.Repository
 {
-    internal interface IActorRepository
+    public interface IActorRepository
     {
         Actor? Get(int actorId);
 

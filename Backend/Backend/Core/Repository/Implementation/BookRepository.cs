@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Core.Repository.Implementation
 {
-    internal class BookRepository : IBookRepository
+    public class BookRepository : IBookRepository
     {
         private readonly DataContext _dataContext;
         private readonly DbSet<Book> _dbSet;

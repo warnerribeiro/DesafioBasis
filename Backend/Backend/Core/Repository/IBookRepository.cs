@@ -2,7 +2,7 @@
 
 namespace Core.Repository
 {
-    internal interface IBookRepository
+    public interface IBookRepository
     {
         Book? Get(int bookId);
 
