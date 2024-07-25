@@ -17,6 +17,12 @@ builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer("name=Connect
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
+builder.Services.AddScoped<IOriginPurchaseRepository, OriginPurchaseRepository>();
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.IgnoreNullValues = true;
+});
 
 //builder.Services.AddProblemDetails();
 

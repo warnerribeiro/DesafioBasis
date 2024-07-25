@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Web.Api.Controllers.V1
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class SubjectController : Controller
     {
         private readonly ISubjectRepository _subjectRepository;

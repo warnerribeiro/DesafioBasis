@@ -20,6 +20,10 @@ namespace Backend.Model
 
         public DbSet<BookSubject> BookSubject { get; set; }
 
+        public DbSet<BookValue> BookValue { get; set; }
+
+        public DbSet<OriginPurchase> OriginPurchase { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new AuthorConfiguration());
@@ -27,11 +31,13 @@ namespace Backend.Model
             modelBuilder.ApplyConfiguration(new BookConfiguration());
             modelBuilder.ApplyConfiguration(new BookAuthorConfiguration());
             modelBuilder.ApplyConfiguration(new BookSubjectConfiguration());
+            modelBuilder.ApplyConfiguration(new BookValueConfiguration());
+            modelBuilder.ApplyConfiguration(new OriginPurchaseConfiguration());
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=192.168.1.100,11433;Database=BookDb;user id=sa;password=@War23ner10;Trusted_Connection=False;TrustServerCertificate=False;Encrypt=false;ConnectRetryCount=0");
+            optionsBuilder.UseSqlServer(@"Server=192.168.1.100,11433;Database=LivroDb;user id=sa;password=@War23ner10;Trusted_Connection=False;TrustServerCertificate=False;Encrypt=false;ConnectRetryCount=0");
         }
     }
 

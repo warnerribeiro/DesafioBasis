@@ -6,6 +6,7 @@
         {
             BookAuthor = new HashSet<BookAuthor>();
             BookSubject = new HashSet<BookSubject>();
+            BookValue = new HashSet<BookValue>();
         }
 
         public int BookId { get; set; }
@@ -21,5 +22,7 @@
         public ICollection<BookAuthor> BookAuthor { get; set; }
 
         public ICollection<BookSubject> BookSubject { get; set; }
+
+        public ICollection<BookValue> BookValue { get; set; }
     }
 }

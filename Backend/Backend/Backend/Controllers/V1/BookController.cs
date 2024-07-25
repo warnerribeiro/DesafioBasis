@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Web.Api.Controllers.V1
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class BookController : Controller
     {
         private readonly IBookRepository _bookRepository;
@@ -43,7 +43,7 @@ namespace Web.Api.Controllers.V1
         }
 
         [HttpPut("{bookId:int}")]
-        public ActionResult<Author> Put(int bookId, Book book)
+        public ActionResult<Book> Put(int bookId, Book book)
         {
             _bookRepository.Update(book);
             return Ok(book);

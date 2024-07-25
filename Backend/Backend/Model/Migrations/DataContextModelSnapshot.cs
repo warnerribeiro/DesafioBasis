@@ -127,6 +127,78 @@ namespace Model.Migrations
                     b.ToTable("LivroAssunto", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Model.BookValue", b =>
+                {
+                    b.Property<int>("BookId")
+                        .HasColumnType("int")
+                        .HasColumnName("LivroId");
+
+                    b.Property<int>("OriginPurchaseId")
+                        .HasColumnType("int")
+                        .HasColumnName("OrigemCompraId");
+
+                    b.Property<decimal>("Value")
+                        .HasColumnType("money")
+                        .HasColumnName("Valor");
+
+                    b.HasKey("BookId", "OriginPurchaseId");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("OriginPurchaseId");
+
+                    b.ToTable("LivroValor", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Model.OriginPurchase", b =>
+                {
+                    b.Property<int>("OriginPurchaseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("OrigemCompraId");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OriginPurchaseId"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(30)")
+                        .HasColumnName("Nome")
+                        .HasComment("Nome de origem da compra");
+
+                    b.HasKey("OriginPurchaseId");
+
+                    b.ToTable("OrigemCompra", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            OriginPurchaseId = 1,
+                            Name = "Balcão"
+                        },
+                        new
+                        {
+                            OriginPurchaseId = 2,
+                            Name = "Banca"
+                        },
+                        new
+                        {
+                            OriginPurchaseId = 3,
+                            Name = "Evento"
+                        },
+                        new
+                        {
+                            OriginPurchaseId = 4,
+                            Name = "Internet"
+                        },
+                        new
+                        {
+                            OriginPurchaseId = 5,
+                            Name = "Self-Service"
+                        });
+                });
+
             modelBuilder.Entity("Domain.Model.Subject", b =>
                 {
                     b.Property<int>("SubjectId")
@@ -188,6 +260,25 @@ namespace Model.Migrations
                     b.Navigation("Subject");
                 });
 
+            modelBuilder.Entity("Domain.Model.BookValue", b =>
+                {
+                    b.HasOne("Domain.Model.Book", "Book")
+                        .WithMany("BookValue")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Model.OriginPurchase", "OriginPurchase")
+                        .WithMany("BookValue")
+                        .HasForeignKey("OriginPurchaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("OriginPurchase");
+                });
+
             modelBuilder.Entity("Domain.Model.Author", b =>
                 {
                     b.Navigation("BookAuthor");
@@ -198,6 +289,13 @@ namespace Model.Migrations
                     b.Navigation("BookAuthor");
 
                     b.Navigation("BookSubject");
+
+                    b.Navigation("BookValue");
+                });
+
+            modelBuilder.Entity("Domain.Model.OriginPurchase", b =>
+                {
+                    b.Navigation("BookValue");
                 });
 
             modelBuilder.Entity("Domain.Model.Subject", b =>

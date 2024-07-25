@@ -2,6 +2,8 @@
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Model.Migrations
 {
     /// <inheritdoc />
@@ -53,6 +55,19 @@ namespace Model.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "OrigemCompra",
+                columns: table => new
+                {
+                    OrigemCompraId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "varchar(30)", unicode: false, maxLength: 30, nullable: false, comment: "Nome de origem da compra")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrigemCompra", x => x.OrigemCompraId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "LivroAssunto",
                 columns: table => new
                 {
@@ -100,6 +115,43 @@ namespace Model.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "LivroValor",
+                columns: table => new
+                {
+                    LivroId = table.Column<int>(type: "int", nullable: false),
+                    OrigemCompraId = table.Column<int>(type: "int", nullable: false),
+                    Valor = table.Column<decimal>(type: "money", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LivroValor", x => new { x.LivroId, x.OrigemCompraId });
+                    table.ForeignKey(
+                        name: "FK_LivroValor_Livro_LivroId",
+                        column: x => x.LivroId,
+                        principalTable: "Livro",
+                        principalColumn: "LivroId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LivroValor_OrigemCompra_OrigemCompraId",
+                        column: x => x.OrigemCompraId,
+                        principalTable: "OrigemCompra",
+                        principalColumn: "OrigemCompraId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "OrigemCompra",
+                columns: new[] { "OrigemCompraId", "Nome" },
+                values: new object[,]
+                {
+                    { 1, "Balcão" },
+                    { 2, "Banca" },
+                    { 3, "Evento" },
+                    { 4, "Internet" },
+                    { 5, "Self-Service" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_LivroAssunto_AssuntoId",
                 table: "LivroAssunto",
@@ -119,6 +171,16 @@ namespace Model.Migrations
                 name: "IX_LivroAutor_LivroId",
                 table: "LivroAutor",
                 column: "LivroId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LivroValor_LivroId",
+                table: "LivroValor",
+                column: "LivroId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LivroValor_OrigemCompraId",
+                table: "LivroValor",
+                column: "OrigemCompraId");
         }
 
         /// <inheritdoc />
@@ -131,6 +193,9 @@ namespace Model.Migrations
                 name: "LivroAutor");
 
             migrationBuilder.DropTable(
+                name: "LivroValor");
+
+            migrationBuilder.DropTable(
                 name: "Assunto");
 
             migrationBuilder.DropTable(
@@ -138,6 +203,9 @@ namespace Model.Migrations
 
             migrationBuilder.DropTable(
                 name: "Livro");
+
+            migrationBuilder.DropTable(
+                name: "OrigemCompra");
         }
     }
 }
