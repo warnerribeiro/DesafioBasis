@@ -2,6 +2,7 @@ using Backend.Model;
 using Core.Repository;
 using Core.Repository.Implementation;
 using Microsoft.EntityFrameworkCore;
+using Web.Api.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +18,12 @@ builder.Services.AddScoped<IActorRepository, ActorRepository>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
 
+//builder.Services.AddProblemDetails();
+
 var app = builder.Build();
+
+//app.UseExceptionHandler();
+//app.UseStatusCodePages();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -25,12 +31,20 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 
+    //app.UseExceptionHandler("/error-development");
+    //app.UseDeveloperExceptionPage();
     using (var scope = app.Services.CreateScope())
     {
         var db = scope.ServiceProvider.GetRequiredService<DataContext>();
         db.Database.Migrate();
     }
 }
+//else
+//{
+//    app.UseExceptionHandler("/error");
+//}
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 

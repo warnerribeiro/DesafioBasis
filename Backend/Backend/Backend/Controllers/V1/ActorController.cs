@@ -1,6 +1,9 @@
 ﻿using Core.Repository;
 using Domain.Model;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 
 namespace Web.Api.Controllers.V1
 {
@@ -55,5 +58,26 @@ namespace Web.Api.Controllers.V1
             _actorRepository.Remove(actorId);
             return Ok();
         }
+
+        //[ApiExplorerSettings(IgnoreApi = true)]
+        //[Route("/error")]
+        //public IActionResult HandleError() => Problem();
+
+        //[ApiExplorerSettings(IgnoreApi = true)]
+        //[Route("/error-development")]
+        //public IActionResult HandleErrorDev([FromServices] IHostEnvironment hostEnvironment) 
+        //{
+        //    if (!hostEnvironment.IsDevelopment())
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var exceptionHandlerFeature =
+        //        HttpContext.Features.Get<IExceptionHandlerFeature>()!;
+
+        //    return Problem(
+        //        detail: exceptionHandlerFeature.Error.StackTrace,
+        //        title: exceptionHandlerFeature.Error.Message);
+        //}
     }
 }
