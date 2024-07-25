@@ -9,53 +9,53 @@ namespace Web.Api.Controllers.V1
 {
     [ApiController]
     [Route("[controller]")]
-    public class ActorController : Controller
+    public class AuthorController : Controller
     {
-        private readonly IActorRepository _actorRepository;
-        private readonly ILogger<ActorController> _logger;
+        private readonly IAuthorRepository _authorRepository;
+        private readonly ILogger<AuthorController> _logger;
 
-        public ActorController(ILogger<ActorController> logger, IActorRepository actorRepository)
+        public AuthorController(ILogger<AuthorController> logger, IAuthorRepository authorRepository)
         {
-            _actorRepository = actorRepository;
+            _authorRepository = authorRepository;
             _logger = logger;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Actor>>> Get()
+        public async Task<ActionResult<IEnumerable<Author>>> Get()
         {
-            return Ok(await _actorRepository.GetAsync());
+            return Ok(await _authorRepository.GetAsync());
         }
 
-        [HttpGet("{actorId:int}")]
-        public ActionResult<Actor> Get(int actorId)
+        [HttpGet("{authorId:int}")]
+        public ActionResult<Author> Get(int authorId)
         {
-            var actor = _actorRepository.Get(actorId);
+            var author = _authorRepository.Get(authorId);
 
-            if (actor == null)
+            if (author == null)
             {
                 return NoContent();
             }
 
-            return Ok(actor);
+            return Ok(author);
         }
 
         [HttpPost]
-        public ActionResult<Actor> Post(Actor actor)
+        public ActionResult<Author> Post(Author author)
         {
-            return _actorRepository.Add(actor);
+            return _authorRepository.Add(author);
         }
 
-        [HttpPut("{actorId:int}")]
-        public ActionResult<Actor> Put(int actorId, Actor actor)
+        [HttpPut("{authorId:int}")]
+        public ActionResult<Author> Put(int authorId, Author author)
         {
-            _actorRepository.Update(actor);
-            return Ok(actor);
+            _authorRepository.Update(author);
+            return Ok(author);
         }
 
-        [HttpDelete("{actorId:int}")]
-        public ActionResult Delete(int actorId)
+        [HttpDelete("{authorId:int}")]
+        public ActionResult Delete(int authorId)
         {
-            _actorRepository.Remove(actorId);
+            _authorRepository.Remove(authorId);
             return Ok();
         }
 

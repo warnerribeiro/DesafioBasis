@@ -14,33 +14,33 @@ namespace Model.Migrations
                 name: "Assunto",
                 columns: table => new
                 {
-                    SubjectId = table.Column<int>(type: "int", nullable: false, comment: "Chave primaria auto incremente")
+                    AssuntoId = table.Column<int>(type: "int", nullable: false, comment: "Chave primaria auto incremente")
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Descricao = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: false, comment: "Descrição do assunto")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Assunto", x => x.SubjectId);
+                    table.PrimaryKey("PK_Assunto", x => x.AssuntoId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Ator",
+                name: "Autor",
                 columns: table => new
                 {
-                    AtorId = table.Column<int>(type: "int", nullable: false, comment: "Chave primaria auto incremente")
+                    AutorId = table.Column<int>(type: "int", nullable: false, comment: "Chave primaria auto incremente")
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "varchar(40)", unicode: false, maxLength: 40, nullable: false, comment: "Nome do ator")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ator", x => x.AtorId);
+                    table.PrimaryKey("PK_Autor", x => x.AutorId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Livro",
                 columns: table => new
                 {
-                    LicroId = table.Column<int>(type: "int", nullable: false, comment: "Chave primaria auto incremente")
+                    LivroId = table.Column<int>(type: "int", nullable: false, comment: "Chave primaria auto incremente")
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Titulo = table.Column<string>(type: "varchar(40)", unicode: false, maxLength: 40, nullable: false, comment: "Titulo do Livro"),
                     Editora = table.Column<string>(type: "varchar(40)", unicode: false, maxLength: 40, nullable: false, comment: "Editora do Livro"),
@@ -49,76 +49,76 @@ namespace Model.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Livro", x => x.LicroId);
+                    table.PrimaryKey("PK_Livro", x => x.LivroId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "LivroAssunto",
                 columns: table => new
                 {
-                    BookId = table.Column<int>(type: "int", nullable: false),
-                    SubjectId = table.Column<int>(type: "int", nullable: false)
+                    LivroId = table.Column<int>(type: "int", nullable: false),
+                    AssuntoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LivroAssunto", x => new { x.BookId, x.SubjectId });
+                    table.PrimaryKey("PK_LivroAssunto", x => new { x.LivroId, x.AssuntoId });
                     table.ForeignKey(
-                        name: "FK_LivroAssunto_Assunto_SubjectId",
-                        column: x => x.SubjectId,
+                        name: "FK_LivroAssunto_Assunto_AssuntoId",
+                        column: x => x.AssuntoId,
                         principalTable: "Assunto",
-                        principalColumn: "SubjectId",
+                        principalColumn: "AssuntoId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_LivroAssunto_Livro_BookId",
-                        column: x => x.BookId,
+                        name: "FK_LivroAssunto_Livro_LivroId",
+                        column: x => x.LivroId,
                         principalTable: "Livro",
-                        principalColumn: "LicroId",
+                        principalColumn: "LivroId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "LivroAtor",
+                name: "LivroAutor",
                 columns: table => new
                 {
-                    BookId = table.Column<int>(type: "int", nullable: false),
-                    ActorId = table.Column<int>(type: "int", nullable: false)
+                    LivroId = table.Column<int>(type: "int", nullable: false),
+                    AutorId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LivroAtor", x => new { x.BookId, x.ActorId });
+                    table.PrimaryKey("PK_LivroAutor", x => new { x.LivroId, x.AutorId });
                     table.ForeignKey(
-                        name: "FK_LivroAtor_Ator_ActorId",
-                        column: x => x.ActorId,
-                        principalTable: "Ator",
-                        principalColumn: "AtorId",
+                        name: "FK_LivroAutor_Autor_AutorId",
+                        column: x => x.AutorId,
+                        principalTable: "Autor",
+                        principalColumn: "AutorId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_LivroAtor_Livro_BookId",
-                        column: x => x.BookId,
+                        name: "FK_LivroAutor_Livro_LivroId",
+                        column: x => x.LivroId,
                         principalTable: "Livro",
-                        principalColumn: "LicroId",
+                        principalColumn: "LivroId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_LivroAssunto_BookId",
+                name: "IX_LivroAssunto_AssuntoId",
                 table: "LivroAssunto",
-                column: "BookId");
+                column: "AssuntoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LivroAssunto_SubjectId",
+                name: "IX_LivroAssunto_LivroId",
                 table: "LivroAssunto",
-                column: "SubjectId");
+                column: "LivroId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LivroAtor_ActorId",
-                table: "LivroAtor",
-                column: "ActorId");
+                name: "IX_LivroAutor_AutorId",
+                table: "LivroAutor",
+                column: "AutorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LivroAtor_BookId",
-                table: "LivroAtor",
-                column: "BookId");
+                name: "IX_LivroAutor_LivroId",
+                table: "LivroAutor",
+                column: "LivroId");
         }
 
         /// <inheritdoc />
@@ -128,13 +128,13 @@ namespace Model.Migrations
                 name: "LivroAssunto");
 
             migrationBuilder.DropTable(
-                name: "LivroAtor");
+                name: "LivroAutor");
 
             migrationBuilder.DropTable(
                 name: "Assunto");
 
             migrationBuilder.DropTable(
-                name: "Ator");
+                name: "Autor");
 
             migrationBuilder.DropTable(
                 name: "Livro");

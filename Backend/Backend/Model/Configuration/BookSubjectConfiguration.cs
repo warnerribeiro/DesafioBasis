@@ -18,6 +18,10 @@ namespace Model.Configuration
             builder.HasIndex(a => a.BookId);
             builder.HasIndex(a => a.SubjectId);
 
+            //Definindo campos
+            builder.Property(a => a.BookId).HasColumnName("LivroId");
+            builder.Property(a => a.SubjectId).HasColumnName("AssuntoId");
+
             // Definindo relacionamento
             builder.HasOne(a => a.Book)
                 .WithMany(a => a.BookSubject)

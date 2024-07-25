@@ -10,22 +10,22 @@ namespace Backend.Model
 
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
-        public DbSet<Actor> Actor { get; set; }
+        public DbSet<Author> Author { get; set; }
 
         public DbSet<Subject> Subject { get; set; }
 
         public DbSet<Book> Book { get; set; }
 
-        public DbSet<BookActor> BookActor { get; set; }
+        public DbSet<BookAuthor> BookAuthor { get; set; }
 
         public DbSet<BookSubject> BookSubject { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new ActorConfiguration());
+            modelBuilder.ApplyConfiguration(new AuthorConfiguration());
             modelBuilder.ApplyConfiguration(new SubjectConfiguration());
             modelBuilder.ApplyConfiguration(new BookConfiguration());
-            modelBuilder.ApplyConfiguration(new BookActorConfiguration());
+            modelBuilder.ApplyConfiguration(new BookAuthorConfiguration());
             modelBuilder.ApplyConfiguration(new BookSubjectConfiguration());
         }
 

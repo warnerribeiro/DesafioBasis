@@ -43,7 +43,7 @@ namespace Web.Api.Controllers.V1
         }
 
         [HttpPut("{bookId:int}")]
-        public ActionResult<Actor> Put(int bookId, Book book)
+        public ActionResult<Author> Put(int bookId, Book book)
         {
             _bookRepository.Update(book);
             return Ok(book);

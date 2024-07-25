@@ -4,17 +4,17 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Model.Configuration
 {
-    internal class ActorConfiguration : IEntityTypeConfiguration<Actor>
+    internal class AuthorConfiguration : IEntityTypeConfiguration<Author>
     {
-        public void Configure(EntityTypeBuilder<Actor> builder)
+        public void Configure(EntityTypeBuilder<Author> builder)
         {
             // Definindo nome da tabela
-            builder.ToTable("Ator");
+            builder.ToTable("Autor");
 
             // Definindo nome da tabela
-            builder.HasKey(a => a.ActorId);
-            builder.Property(a => a.ActorId)
-                .HasColumnName("AtorId").
+            builder.HasKey(a => a.AuthorId);
+            builder.Property(a => a.AuthorId)
+                .HasColumnName("AutorId").
                 UseIdentityColumn()
                 .HasComment("Chave primaria auto incremente");
 

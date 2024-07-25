@@ -4,7 +4,7 @@
     {
         public Book()
         {
-            BookActor = new HashSet<BookActor>();
+            BookAuthor = new HashSet<BookAuthor>();
             BookSubject = new HashSet<BookSubject>();
         }
 
@@ -18,7 +18,7 @@
 
         public string YearOfPublication { get; set; }
 
-        public ICollection<BookActor> BookActor { get; set; }
+        public ICollection<BookAuthor> BookAuthor { get; set; }
 
         public ICollection<BookSubject> BookSubject { get; set; }
     }

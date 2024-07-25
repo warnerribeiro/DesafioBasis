@@ -1,13 +1,13 @@
 ﻿namespace Domain.Model
 {
-    public class BookActor
+    public class BookAuthor
     {
         public int BookId { get; set; }
 
-        public int ActorId { get; set; }
+        public int AuthorId { get; set; }
 
         public Book Book { get; set; }
 
-        public Actor Actor { get; set; }
+        public Author Author { get; set; }
     }
 }

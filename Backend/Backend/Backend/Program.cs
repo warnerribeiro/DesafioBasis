@@ -14,7 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer("name=ConnectionStrings:SqlServerDev"));
-builder.Services.AddScoped<IActorRepository, ActorRepository>();
+builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
 

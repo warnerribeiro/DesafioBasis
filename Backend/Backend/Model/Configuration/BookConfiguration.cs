@@ -14,7 +14,7 @@ namespace Model.Configuration
             // Definindo chave primaria
             builder.HasKey(a => a.BookId);
             builder.Property(a => a.BookId)
-                .HasColumnName("LicroId")
+                .HasColumnName("LivroId")
                 .UseIdentityColumn()
                 .HasComment("Chave primaria auto incremente");
 
@@ -45,8 +45,6 @@ namespace Model.Configuration
              .IsRequired()
              .HasMaxLength(4)
              .HasComment("Ano de Publicação do Livro");
-
-            // Definindo relacionamento
         }
     }
 }

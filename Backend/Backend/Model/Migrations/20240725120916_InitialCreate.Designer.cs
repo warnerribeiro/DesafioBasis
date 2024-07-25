@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Model.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240724214858_InitialCreate")]
+    [Migration("20240725120916_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -24,15 +24,15 @@ namespace Model.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.Model.Actor", b =>
+            modelBuilder.Entity("Domain.Model.Author", b =>
                 {
-                    b.Property<int>("ActorId")
+                    b.Property<int>("AuthorId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("AtorId")
+                        .HasColumnName("AutorId")
                         .HasComment("Chave primaria auto incremente");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ActorId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AuthorId"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -42,9 +42,9 @@ namespace Model.Migrations
                         .HasColumnName("Nome")
                         .HasComment("Nome do ator");
 
-                    b.HasKey("ActorId");
+                    b.HasKey("AuthorId");
 
-                    b.ToTable("Ator", (string)null);
+                    b.ToTable("Autor", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Model.Book", b =>
@@ -52,7 +52,7 @@ namespace Model.Migrations
                     b.Property<int>("BookId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("LicroId")
+                        .HasColumnName("LivroId")
                         .HasComment("Chave primaria auto incremente");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookId"));
@@ -92,30 +92,34 @@ namespace Model.Migrations
                     b.ToTable("Livro", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Model.BookActor", b =>
+            modelBuilder.Entity("Domain.Model.BookAuthor", b =>
                 {
                     b.Property<int>("BookId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("LivroId");
 
-                    b.Property<int>("ActorId")
-                        .HasColumnType("int");
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("int")
+                        .HasColumnName("AutorId");
 
-                    b.HasKey("BookId", "ActorId");
+                    b.HasKey("BookId", "AuthorId");
 
-                    b.HasIndex("ActorId");
+                    b.HasIndex("AuthorId");
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("LivroAtor", (string)null);
+                    b.ToTable("LivroAutor", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Model.BookSubject", b =>
                 {
                     b.Property<int>("BookId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("LivroId");
 
                     b.Property<int>("SubjectId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("AssuntoId");
 
                     b.HasKey("BookId", "SubjectId");
 
@@ -131,6 +135,7 @@ namespace Model.Migrations
                     b.Property<int>("SubjectId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+                        .HasColumnName("AssuntoId")
                         .HasComment("Chave primaria auto incremente");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubjectId"));
@@ -148,21 +153,21 @@ namespace Model.Migrations
                     b.ToTable("Assunto", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Model.BookActor", b =>
+            modelBuilder.Entity("Domain.Model.BookAuthor", b =>
                 {
-                    b.HasOne("Domain.Model.Actor", "Actor")
-                        .WithMany("BookActor")
-                        .HasForeignKey("ActorId")
+                    b.HasOne("Domain.Model.Author", "Author")
+                        .WithMany("BookAuthor")
+                        .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Model.Book", "Book")
-                        .WithMany("BookActor")
+                        .WithMany("BookAuthor")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Actor");
+                    b.Navigation("Author");
 
                     b.Navigation("Book");
                 });
@@ -186,14 +191,14 @@ namespace Model.Migrations
                     b.Navigation("Subject");
                 });
 
-            modelBuilder.Entity("Domain.Model.Actor", b =>
+            modelBuilder.Entity("Domain.Model.Author", b =>
                 {
-                    b.Navigation("BookActor");
+                    b.Navigation("BookAuthor");
                 });
 
             modelBuilder.Entity("Domain.Model.Book", b =>
                 {
-                    b.Navigation("BookActor");
+                    b.Navigation("BookAuthor");
 
                     b.Navigation("BookSubject");
                 });

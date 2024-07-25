@@ -13,7 +13,7 @@ namespace Model.Configuration
 
             // Definindo nome da tabela
             builder.HasKey(a => a.SubjectId);
-            builder.Property(a => a.SubjectId).UseIdentityColumn().HasComment("Chave primaria auto incremente");
+            builder.Property(a => a.SubjectId).HasColumnName("AssuntoId").UseIdentityColumn().HasComment("Chave primaria auto incremente");
 
             // Definindo campos
             builder.Property(a => a.Description)
