@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Assunto } from 'src/app/interfaces/assunto';
+import { Router } from '@angular/router';
+import { Subject } from 'src/app/interfaces/subject';
 import { SubjectService } from 'src/app/services/subject.service';
 
 @Component({
@@ -10,15 +11,11 @@ import { SubjectService } from 'src/app/services/subject.service';
 export class SubjectlistComponent {
 
   public loading!: boolean;
-  public assuntos!: Assunto[];
+  public assuntos!: Subject[];
   /**
    *
    */
-  constructor(private subjectService: SubjectService) {
-
-  }
-
-  subject: any;
+  constructor(private subjectService: SubjectService, private router: Router) { }
 
   ngOnInit(): void {
     this.getList();
@@ -27,7 +24,7 @@ export class SubjectlistComponent {
   getList() {
     this.loading = true;
     this.subjectService.getAll().subscribe({
-      next: (response: Assunto[]) => {
+      next: (response: Subject[]) => {
         console.log('response===>', response);
         this.assuntos = response;
       },
@@ -36,5 +33,21 @@ export class SubjectlistComponent {
       },
       complete: () => { this.loading = false }
     });
+  }
+
+  delete(subject: Subject) {
+    this.subjectService.delete(subject.subjectId).subscribe({
+      next: (response: Subject[]) => {
+        console.log('delete===>', response);
+      },
+      error: (error: any) => {
+        console.log('delteerror===>', error);
+      },
+      complete: () => { this.getList(); }
+    });
+  }
+
+  update(subject: Subject) {
+    this.router.navigateByUrl("/subject/" + subject.subjectId)
   }
 }

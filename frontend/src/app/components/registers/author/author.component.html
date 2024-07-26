@@ -1,0 +1,11 @@
+<h2>Cadastro de Autor</h2>
+
+<form #author="ngForm" (ngSubmit)="save(author)">
+    <div class="form-group">
+        <div class="mb-3">
+            <label for="name" class="form-label">Nome:</label>
+            <input name="name" type="text" class="form-control" id="name" placeholder="ex: João Carlos" required ngModel>
+        </div>
+    </div>
+    <input class="btn btn-primary" type="submit" value="Salvar">
+</form>
