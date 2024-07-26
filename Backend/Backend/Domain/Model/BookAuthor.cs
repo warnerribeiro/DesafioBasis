@@ -1,4 +1,6 @@
-﻿namespace Domain.Model
+﻿using System.Text.Json.Serialization;
+
+namespace Domain.Model
 {
     public class BookAuthor
     {
@@ -6,8 +8,10 @@
 
         public int AuthorId { get; set; }
 
-        public Book Book { get; set; }
+        [JsonIgnore]
+        public Book? Book { get; set; }
 
-        public Author Author { get; set; }
+        [JsonIgnore]
+        public Author? Author { get; set; }
     }
 }

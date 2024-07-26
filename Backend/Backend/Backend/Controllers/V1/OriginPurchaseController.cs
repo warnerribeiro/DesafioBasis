@@ -45,13 +45,12 @@ namespace Web.Api.Controllers.V1
         [HttpPut("{originPurchaseId:int}")]
         public ActionResult<OriginPurchase> Put(int originPurchaseId, OriginPurchase originPurchase)
         {
-            if (originPurchaseId != originPurchase.OriginPurchaseId)
+            if (originPurchase == null || originPurchaseId != originPurchase.OriginPurchaseId)
             {
                 return BadRequest("Id de atualização do objecto não confere.");
             }
 
-            _originPurchaRepository.Update(originPurchase);
-            return Ok(originPurchase);
+            return Ok(_originPurchaRepository.Update(originPurchase));
         }
 
         [HttpDelete("{originPurchaseId:int}")]

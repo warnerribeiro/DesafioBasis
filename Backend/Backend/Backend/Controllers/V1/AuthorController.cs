@@ -1,6 +1,7 @@
 ﻿using Core.Repository;
 using Domain.Model;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace Web.Api.Controllers.V1
 {
@@ -45,8 +46,12 @@ namespace Web.Api.Controllers.V1
         [HttpPut("{authorId:int}")]
         public ActionResult<Author> Put(int authorId, Author author)
         {
-            _authorRepository.Update(author);
-            return Ok(author);
+            if (author == null || authorId != author.AuthorId)
+            {
+                return BadRequest("Id de atualização do objecto não confere.");
+            }
+
+            return Ok(_authorRepository.Update(author));
         }
 
         [HttpDelete("{authorId:int}")]

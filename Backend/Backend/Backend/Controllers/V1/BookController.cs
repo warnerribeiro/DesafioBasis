@@ -45,8 +45,12 @@ namespace Web.Api.Controllers.V1
         [HttpPut("{bookId:int}")]
         public ActionResult<Book> Put(int bookId, Book book)
         {
-            _bookRepository.Update(book);
-            return Ok(book);
+            if (book == null || bookId != book.BookId)
+            {
+                return BadRequest("Id de atualização do objecto não confere.");
+            }
+
+            return Ok(_bookRepository.Update(book));
         }
 
         [HttpDelete("{bookId:int}")]

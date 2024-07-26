@@ -55,8 +55,7 @@ namespace Web.Api.Controllers.V1
                 return BadRequest();
             }
             
-            _subjectRepository.Update(subject);
-            return Ok(subject);
+            return Ok(_subjectRepository.Update(subject));
         }
 
         [HttpDelete("{subjectId:int}")]

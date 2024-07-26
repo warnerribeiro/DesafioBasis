@@ -1,4 +1,6 @@
-﻿namespace Domain.Model
+﻿using System.Text.Json.Serialization;
+
+namespace Domain.Model
 {
     public class BookValue
     {
@@ -8,8 +10,10 @@
 
         public decimal Value { get; set; }
 
-        public Book Book { get; set; }
+        [JsonIgnore]
+        public Book? Book { get; set; }
 
-        public OriginPurchase OriginPurchase { get; set; }
+        [JsonIgnore]
+        public OriginPurchase? OriginPurchase { get; set; }
     }
 }
