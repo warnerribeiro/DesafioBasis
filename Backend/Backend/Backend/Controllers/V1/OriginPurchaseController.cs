@@ -23,7 +23,7 @@ namespace Web.Api.Controllers.V1
             return Ok(await _originPurchaRepository.GetAsync());
         }
 
-        [HttpGet("{bookId:int}")]
+        [HttpGet("{originPurchaseId:int}")]
         public ActionResult<OriginPurchase> Get(int originPurchaseId)
         {
             var originPurchas = _originPurchaRepository.Get(originPurchaseId);

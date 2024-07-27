@@ -22,7 +22,11 @@ namespace Core.Repository.Implementation
 
         public Book? Get(int bookId)
         {
-            return _dbSet.Find(bookId);
+            return _dbSet
+                .Include(a => a.BookAuthor)
+                .Include(a => a.BookSubject)
+                .Include(a => a.BookValue)
+                .Single(a => a.BookId == bookId);
         }
 
         public Book Add(Book book)
