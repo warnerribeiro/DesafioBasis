@@ -17,7 +17,7 @@ namespace Core.Repository.Implementation
 
         public async Task<IEnumerable<Author>> GetAsync()
         {
-            return await _dbSet.ToListAsync();
+            return await _dbSet.AsNoTracking().ToListAsync();
         }
 
         public Author? Get(int authorId)

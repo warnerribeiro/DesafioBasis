@@ -17,7 +17,7 @@ namespace Core.Repository.Implementation
 
         public async Task<IEnumerable<OriginPurchase>> GetAsync()
         {
-            return await _dbSet.ToListAsync();
+            return await _dbSet.AsNoTracking().ToListAsync();
         }
 
         public OriginPurchase? Get(int originPurchaseId)

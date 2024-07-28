@@ -36,7 +36,7 @@ namespace Core.Repository.Implementation
 
         public async Task<IEnumerable<BookValue>> GetAsync()
         {
-            return await _dbSet.ToListAsync();
+            return await _dbSet.AsNoTracking().ToListAsync();
         }
 
         public async Task Remove(int bookValueId)

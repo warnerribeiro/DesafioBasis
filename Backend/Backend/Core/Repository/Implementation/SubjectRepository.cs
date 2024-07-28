@@ -17,7 +17,7 @@ namespace Core.Repository.Implementation
 
         public async Task<IEnumerable<Subject>> GetAsync()
         {
-            return await _dbSet.ToListAsync();
+            return await _dbSet.AsNoTracking().ToListAsync();
         }
 
         public Subject? Get(int subjectId)
@@ -32,6 +32,7 @@ namespace Core.Repository.Implementation
 
             return subject;
         }
+
         public async Task<Subject> Update(Subject subject)
         {
             _dbSet.Update(subject);

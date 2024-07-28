@@ -22,7 +22,7 @@ namespace Core.Repository.Implementation
 
         public async Task<IEnumerable<BookAuthor>> GetAsync()
         {
-            return await _dbSet.ToListAsync();
+            return await _dbSet.AsNoTracking().ToListAsync();
         }
 
         public async Task<BookAuthor> Add(BookAuthor bookAuthor)
