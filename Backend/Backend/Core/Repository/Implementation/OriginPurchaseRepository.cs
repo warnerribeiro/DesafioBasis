@@ -15,12 +15,9 @@ namespace Core.Repository.Implementation
             _dbSet = _dataContext.OriginPurchase;
         }
 
-        public OriginPurchase Add(OriginPurchase originPurchase)
+        public async Task<IEnumerable<OriginPurchase>> GetAsync()
         {
-            _dbSet.Add(originPurchase);
-            _dataContext.SaveChanges();
-
-            return originPurchase;
+            return await _dbSet.ToListAsync();
         }
 
         public OriginPurchase? Get(int originPurchaseId)
@@ -28,28 +25,31 @@ namespace Core.Repository.Implementation
             return _dbSet.Find(originPurchaseId);
         }
 
-        public async Task<IEnumerable<OriginPurchase>> GetAsync()
+        public async Task<OriginPurchase> Add(OriginPurchase originPurchase)
         {
-            return await _dbSet.ToListAsync();
+            await _dbSet.AddAsync(originPurchase);
+            await _dataContext.SaveChangesAsync();
+
+            return originPurchase;
         }
 
-        public void Remove(int originPurchaseId)
+        public async Task<OriginPurchase> Update(OriginPurchase originPurchase)
+        {
+            _dbSet.Update(originPurchase);
+            await _dataContext.SaveChangesAsync();
+
+            return originPurchase;
+        }
+
+        public async Task Remove(int originPurchaseId)
         {
             var originPurchase = Get(originPurchaseId);
 
             if (originPurchase != null)
             {
                 _dbSet.Remove(originPurchase);
-                _dataContext.SaveChanges();
+                await _dataContext.SaveChangesAsync();
             }
-        }
-
-        public OriginPurchase Update(OriginPurchase originPurchase)
-        {
-            _dbSet.Update(originPurchase);
-            _dataContext.SaveChanges();
-
-            return originPurchase;
         }
     }
 }

@@ -37,26 +37,26 @@ namespace Web.Api.Controllers.V1
         }
 
         [HttpPost]
-        public ActionResult<OriginPurchase> Post(OriginPurchase originPurchase)
+        public async Task<ActionResult<OriginPurchase>> Post(OriginPurchase originPurchase)
         {
-            return _originPurchaRepository.Add(originPurchase);
+            return await _originPurchaRepository.Add(originPurchase);
         }
 
         [HttpPut("{originPurchaseId:int}")]
-        public ActionResult<OriginPurchase> Put(int originPurchaseId, OriginPurchase originPurchase)
+        public async Task<ActionResult<OriginPurchase>> Put(int originPurchaseId, OriginPurchase originPurchase)
         {
             if (originPurchase == null || originPurchaseId != originPurchase.OriginPurchaseId)
             {
                 return BadRequest("Id de atualização do objecto não confere.");
             }
 
-            return Ok(_originPurchaRepository.Update(originPurchase));
+            return Ok(await _originPurchaRepository.Update(originPurchase));
         }
 
         [HttpDelete("{originPurchaseId:int}")]
-        public ActionResult Delete(int originPurchaseId)
+        public async Task<ActionResult> Delete(int originPurchaseId)
         {
-            _originPurchaRepository.Remove(originPurchaseId);
+            await _originPurchaRepository.Remove(originPurchaseId);
             return Ok();
         }
     }

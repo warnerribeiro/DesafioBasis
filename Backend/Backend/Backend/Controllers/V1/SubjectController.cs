@@ -37,31 +37,31 @@ namespace Web.Api.Controllers.V1
         }
 
         [HttpPost]
-        public ActionResult<Subject> Post(Subject subject)
+        public async Task<ActionResult<Subject>> Post(Subject subject)
         {
             if (subject == null)
             {
                 return BadRequest();
             }
 
-            return _subjectRepository.Add(subject);
+            return await _subjectRepository.Add(subject);
         }
 
         [HttpPut("{subjectId:int}")]
-        public ActionResult<Subject> Put(int subjectId, Subject subject)
+        public async Task<ActionResult<Subject>> Put(int subjectId, Subject subject)
         {
             if (subject == null || subjectId != subject.SubjectId) 
             {
                 return BadRequest();
             }
             
-            return Ok(_subjectRepository.Update(subject));
+            return Ok(await _subjectRepository.Update(subject));
         }
 
         [HttpDelete("{subjectId:int}")]
-        public ActionResult Delete(int subjectId)
+        public async Task<ActionResult> Delete(int subjectId)
         {
-            _subjectRepository.Remove(subjectId);
+            await _subjectRepository.Remove(subjectId);
             return Ok();
         }
     }

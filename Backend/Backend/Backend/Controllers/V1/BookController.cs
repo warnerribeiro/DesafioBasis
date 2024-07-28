@@ -24,9 +24,9 @@ namespace Web.Api.Controllers.V1
         }
 
         [HttpGet("{bookId:int}")]
-        public ActionResult<Book> Get(int bookId)
+        public async Task<ActionResult<Book>> Get(int bookId)
         {
-            var book = _bookRepository.Get(bookId);
+            var book = await _bookRepository.Get(bookId);
 
             if (book == null)
             {
@@ -37,26 +37,26 @@ namespace Web.Api.Controllers.V1
         }
 
         [HttpPost]
-        public ActionResult<Book> Post(Book book)
+        public async Task<ActionResult<Book>> Post(Book book)
         {
-            return _bookRepository.Add(book);
+            return await _bookRepository.Add(book);
         }
 
         [HttpPut("{bookId:int}")]
-        public ActionResult<Book> Put(int bookId, Book book)
+        public async Task<ActionResult<Book>> Put(int bookId, Book book)
         {
             if (book == null || bookId != book.BookId)
             {
                 return BadRequest("Id de atualização do objecto não confere.");
             }
 
-            return Ok(_bookRepository.Update(book));
+            return Ok(await _bookRepository.Update(book));
         }
 
         [HttpDelete("{bookId:int}")]
-        public ActionResult Delete(int bookId)
+        public async Task<ActionResult> Delete(int bookId)
         {
-            _bookRepository.Remove(bookId);
+            await _bookRepository.Remove(bookId);
             return Ok();
         }
     }

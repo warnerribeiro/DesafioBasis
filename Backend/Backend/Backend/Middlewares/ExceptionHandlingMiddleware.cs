@@ -41,7 +41,7 @@ namespace Web.Api.Middlewares
             {
                 case SqlException:
                 case DbUpdateException:
-                    response.StatusCode = 
+                    response.StatusCode =
                         errorResponse.StatusCode = StatusCodes.Status500InternalServerError;
                     errorResponse.Message = "Error ao Persistir no banco de dados.";
                     break;
@@ -52,7 +52,7 @@ namespace Web.Api.Middlewares
                     break;
             }
 
-            _logger.LogError(exception.Message);
+            _logger.LogError(exception?.InnerException?.Message ?? exception?.Message);
             var result = JsonSerializer.Serialize(errorResponse);
             await context.Response.WriteAsync(result);
         }

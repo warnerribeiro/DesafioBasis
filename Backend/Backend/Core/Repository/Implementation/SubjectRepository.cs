@@ -25,29 +25,29 @@ namespace Core.Repository.Implementation
             return _dbSet.Find(subjectId);
         }
 
-        public Subject Add(Subject subject)
+        public async Task<Subject> Add(Subject subject)
         {
-            _dbSet.Add(subject);
-            _dataContext.SaveChanges();
+            await _dbSet.AddAsync(subject);
+            await _dataContext.SaveChangesAsync();
 
             return subject;
         }
-        public Subject Update(Subject subject)
+        public async Task<Subject> Update(Subject subject)
         {
             _dbSet.Update(subject);
-            _dataContext.SaveChanges();
+            await _dataContext.SaveChangesAsync();
 
             return subject;
         }
 
-        public void Remove(int SubjectId)
+        public async Task Remove(int SubjectId)
         {
             var Subject = Get(SubjectId);
 
             if (Subject != null)
             {
                 _dbSet.Remove(Subject);
-                _dataContext.SaveChanges();
+                await _dataContext.SaveChangesAsync();
             }
         }
     }

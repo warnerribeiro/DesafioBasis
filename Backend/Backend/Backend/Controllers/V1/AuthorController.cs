@@ -38,26 +38,26 @@ namespace Web.Api.Controllers.V1
         }
 
         [HttpPost]
-        public ActionResult<Author> Post(Author author)
+        public async Task<ActionResult<Author>> Post(Author author)
         {
-            return _authorRepository.Add(author);
+            return await _authorRepository.Add(author);
         }
 
         [HttpPut("{authorId:int}")]
-        public ActionResult<Author> Put(int authorId, Author author)
+        public async Task<ActionResult<Author>> Put(int authorId, Author author)
         {
             if (author == null || authorId != author.AuthorId)
             {
                 return BadRequest("Id de atualização do objecto não confere.");
             }
 
-            return Ok(_authorRepository.Update(author));
+            return Ok(await _authorRepository.Update(author));
         }
 
         [HttpDelete("{authorId:int}")]
-        public ActionResult Delete(int authorId)
+        public async Task<ActionResult> Delete(int authorId)
         {
-            _authorRepository.Remove(authorId);
+            await _authorRepository.Remove(authorId);
             return Ok();
         }
     }

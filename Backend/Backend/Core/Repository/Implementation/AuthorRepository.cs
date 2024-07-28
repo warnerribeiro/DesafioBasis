@@ -25,29 +25,30 @@ namespace Core.Repository.Implementation
             return _dbSet.Find(authorId);
         }
 
-        public Author Add(Author author)
+        public async Task<Author> Add(Author author)
         {
-            _dbSet.Add(author);
-            _dataContext.SaveChanges();
+            await _dbSet.AddAsync(author);
+            await _dataContext.SaveChangesAsync();
 
             return author;
         }
-        public Author Update(Author author)
+
+        public async Task<Author> Update(Author author)
         {
             _dbSet.Update(author);
-            _dataContext.SaveChanges();
+            await _dataContext.SaveChangesAsync();
 
             return author;
         }
 
-        public void Remove(int authorId)
+        public async Task Remove(int authorId)
         {
             var author = Get(authorId);
 
             if (author != null)
             {
                 _dbSet.Remove(author);
-                _dataContext.SaveChanges();
+                await _dataContext.SaveChangesAsync();
             }
         }
     }

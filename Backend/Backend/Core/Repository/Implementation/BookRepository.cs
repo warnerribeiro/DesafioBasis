@@ -20,38 +20,38 @@ namespace Core.Repository.Implementation
             return await _dbSet.ToListAsync();
         }
 
-        public Book? Get(int bookId)
+        public async Task<Book?> Get(int bookId)
         {
-            return _dbSet
+            return await _dbSet
                 .Include(a => a.BookAuthor)
                 .Include(a => a.BookSubject)
                 .Include(a => a.BookValue)
-                .Single(a => a.BookId == bookId);
+                .SingleAsync(a => a.BookId == bookId);
         }
 
-        public Book Add(Book book)
+        public async Task<Book> Add(Book book)
         {
-            _dbSet.Add(book);
-            _dataContext.SaveChanges();
+            await _dbSet.AddAsync(book);
+            await _dataContext.SaveChangesAsync();
 
             return book;
         }
-        public Book Update(Book book)
+        public async Task<Book> Update(Book book)
         {
             _dbSet.Update(book);
-            _dataContext.SaveChanges();
+            await _dataContext.SaveChangesAsync();
 
             return book;
         }
 
-        public void Remove(int bookId)
+        public async Task Remove(int bookId)
         {
-            var book = Get(bookId);
+            var book = await Get(bookId);
 
             if (book != null)
             {
                 _dbSet.Remove(book);
-                _dataContext.SaveChanges();
+                await _dataContext.SaveChangesAsync();
             }
         }
     }

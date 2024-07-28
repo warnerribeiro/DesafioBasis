@@ -6,11 +6,11 @@ namespace Core.Repository
     {
         Subject Get(int sujectId);
 
-        Subject Add(Subject subject);
+        Task<Subject> Add(Subject subject);
 
-        Subject Update(Subject subject);
+        Task<Subject> Update(Subject subject);
 
-        void Remove(int sujectId);
+        Task Remove(int sujectId);
 
         Task<IEnumerable<Subject>> GetAsync();
     }

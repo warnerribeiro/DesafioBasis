@@ -4,13 +4,13 @@ namespace Core.Repository
 {
     public interface IBookRepository
     {
-        Book? Get(int bookId);
+        Task<Book?> Get(int bookId);
 
-        Book Add(Book book);
+        Task<Book> Add(Book book);
 
-        Book Update(Book book);
+        Task<Book> Update(Book book);
 
-        void Remove(int bookId);
+        Task Remove(int bookId);
 
         Task<IEnumerable<Book>> GetAsync();
     }

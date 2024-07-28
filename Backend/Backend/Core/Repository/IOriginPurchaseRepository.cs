@@ -6,11 +6,11 @@ namespace Core.Repository
     {
         OriginPurchase? Get(int originPurchaseId);
 
-        OriginPurchase Add(OriginPurchase originPurchase);
+        Task<OriginPurchase> Add(OriginPurchase originPurchase);
 
-        OriginPurchase Update(OriginPurchase originPurchase);
+        Task<OriginPurchase> Update(OriginPurchase originPurchase);
 
-        void Remove(int originPurchaseId);
+        Task Remove(int originPurchaseId);
 
         Task<IEnumerable<OriginPurchase>> GetAsync();
     }
