@@ -25,7 +25,6 @@ export class BooklistComponent {
     this.loading = true;
     this.bookService.getAll().subscribe({
       next: (response: Book[]) => {
-        console.log('response===>', response);
         this.livro = response;
       },
       error: (error: any) => {
@@ -38,7 +37,6 @@ export class BooklistComponent {
   delete(id: number) {
     this.bookService.delete(id).subscribe({
       next: (response: Book[]) => {
-        console.log('delete===>', response);
       },
       error: (error: any) => {
         console.log('delteerror===>', error);
@@ -48,6 +46,6 @@ export class BooklistComponent {
   }
 
   update(id: number) {
-    this.router.navigateByUrl("/subject/" + id)
+    this.router.navigateByUrl("/book/" + id)
   }
 }

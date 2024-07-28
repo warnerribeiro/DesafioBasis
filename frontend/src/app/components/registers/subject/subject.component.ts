@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Author } from 'src/app/interfaces/author';
 import { Subject } from 'src/app/interfaces/subject';
 import { SubjectService } from 'src/app/services/subject.service';
 
@@ -12,14 +13,11 @@ import { SubjectService } from 'src/app/services/subject.service';
 export class SubjectComponent {
 
   private readonly formBuilder = inject(FormBuilder);
-  private subjectService = inject(SubjectService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
+  private readonly subjectService = inject(SubjectService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
 
-  public assuntos!: Subject;
   private id!: number;
-
-	show = false;
 
   protected form: any = this.formBuilder.group(
     {
@@ -33,17 +31,15 @@ export class SubjectComponent {
   ngOnInit(): void {
 
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    
 
     if (id) {
       this.subjectService.get(id).subscribe({
         next: (response: Subject) => {
-          console.log('Subject GetId!', response);
           this.form.get('description')?.setValue(response.description);
           this.id = response.subjectId;
         },
         error: (error: any) => {
-          console.log('Subject GetId Error!', error);
+          console.log('Error getting the subject!', error);
         },
         complete: () => { }
       });
@@ -51,18 +47,17 @@ export class SubjectComponent {
   }
 
   onSubmit() {
+    var subject: Subject = this.form.value;
+    subject.subjectId = this.id ?? 0;
+
     if (this.id) {
-      this.update();
+      this.update(subject);
     } else {
-      this.add();
+      this.add(subject);
     }
   }
 
-  add() {
-
-    var subject: Subject = this.form.value;
-    subject.subjectId = this.id;
-
+  add(subject: Subject) {
     this.subjectService.post(subject).subscribe({
       next: (response: Subject) => {
         console.log('Subject Saved!', response);
@@ -70,17 +65,13 @@ export class SubjectComponent {
         this.router.navigateByUrl("/subjectlist");
       },
       error: (error: any) => {
-        console.log('Subject error!', error);
+        console.log('Error saving the subject!', error);
       },
       complete: () => { }
     });
   }
 
-  update() {
-
-    var subject: Subject = this.form.value;
-    subject.subjectId = this.id;
-
+  update(subject: Subject) {
     this.subjectService.put(this.id, subject).subscribe({
       next: (response: Subject) => {
         console.log('Subject Update!', response);
@@ -88,23 +79,9 @@ export class SubjectComponent {
         this.router.navigateByUrl("/subjectlist");
       },
       error: (error: any) => {
-        console.log('Subject error!', error);
+        console.log('Error updating the subject!', error);
       },
       complete: () => { }
     });
   }
-
-  // save(assunto: NgForm) {
-  //   this.subjectService.post(assunto.value).subscribe({
-  //     next: (response: Subject) => {
-  //       console.log('Salvo!!===>', response);
-  //       this.assuntos = response;
-  //       this.router.navigateByUrl("/subjectlist")
-  //     },
-  //     error: (error: any) => {
-  //       console.log('error===>', error);
-  //     },
-  //     complete: () => { }
-  //   });
-  // }
 }

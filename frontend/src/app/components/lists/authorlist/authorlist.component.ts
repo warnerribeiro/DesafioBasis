@@ -48,6 +48,6 @@ export class AuthorlistComponent {
   }
 
   update(id: number) {
-    this.router.navigateByUrl("/subject/" + id)
+    this.router.navigateByUrl("/author/" + id)
   }
 }

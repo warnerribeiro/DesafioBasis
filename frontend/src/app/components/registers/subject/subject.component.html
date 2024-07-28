@@ -1,25 +1,23 @@
-<div class="col-md-12">
-    <div class="row">
-        <h2>Cadastro de Assunto</h2>
-    </div>
-    <div class="row">
-        <form [formGroup]="form">
-            <div class="form-group">
+<form [formGroup]="form">
+    <div class="col-md-12">
+        <div class="row">
+            <h2>Cadastro de Assunto</h2>
+        </div>
+        <div class="form-group">
+            <div class="row">
                 <div class="mb-3">
-                    <label for="description" class="control-label">Descrição:</label>
-                    <input class="m-0 p-0" name="description" type="text" id="description" placeholder="" required
-                        formControlName="description">
+                    <label for="description" class="form-label">Descrição:</label>
+                    <input id="description" class="form-control" type="text" placeholder="" required
+                        formControlName="description" maxlength="20">
                 </div>
                 <small class="m-0 p-0"
                     *ngIf="(form?.controls?.description?.errors?.['required'] || !form?.controls?.description?.valid) && (form?.controls?.description?.dirty || form?.controls?.description?.touched)">
                     O campo deve ser preenchido!
                 </small>
             </div>
-        </form>
-    </div>
-    <div class="row">
-        <div class="form-group">
-            <button class="btn btn-primary" (click)="onSubmit()" [disabled]="!form.valid">Salvar</button>
+            <div class="row">
+                <button class="btn btn-primary" (click)="onSubmit()" [disabled]="!form.valid">Salvar</button>
+            </div>
         </div>
     </div>
-</div>
+</form>
