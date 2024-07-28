@@ -80,8 +80,8 @@ export class BookComponent {
           this.form.get('publisher')?.setValue(response.publisher);
           this.form.get('edition')?.setValue(response.edition);
           this.form.get('yearOfPublication')?.setValue(response.yearOfPublication);
-          this.form.get('bookauthor')?.setValue(response.bookAuthor.map(a => a.authorId.toString()));
-          this.form.get('booksubject')?.setValue(response.bookSubject.map(a => a.subjectId.toString()));
+          this.form.get('bookAuthor')?.setValue(response.bookAuthor.map(a => a.authorId.toString()));
+          this.form.get('bookSubject')?.setValue(response.bookSubject.map(a => a.subjectId.toString()));
           this.bookvalue = response.bookValue;
 
           var t = response.bookValue.forEach(element => {
