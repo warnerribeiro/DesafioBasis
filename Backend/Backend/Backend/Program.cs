@@ -17,7 +17,9 @@ builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer("name=Connect
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
-builder.Services.AddScoped<IOriginPurchaseRepository, OriginPurchaseRepository>();
+builder.Services.AddScoped<IBookAutorRepository, BookAuthorRepository>();
+builder.Services.AddScoped<IBookSubjectRepository, BookSubjectRepository>();
+builder.Services.AddScoped<IBookValueRepository, BookValueRepository>();
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {

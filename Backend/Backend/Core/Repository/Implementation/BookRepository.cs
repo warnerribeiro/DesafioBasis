@@ -7,11 +7,20 @@ namespace Core.Repository.Implementation
     public class BookRepository : IBookRepository
     {
         private readonly DataContext _dataContext;
+        private readonly IBookAutorRepository _bookAutorRepository;
+        private readonly IBookSubjectRepository _bookSubjectRepository;
+        private readonly IBookValueRepository _bookValueRepository;
         private readonly DbSet<Book> _dbSet;
 
-        public BookRepository(DataContext datacontext)
+        public BookRepository(DataContext datacontext, 
+            IBookAutorRepository bookAutorRepository, 
+            IBookSubjectRepository bookSubjectRepository, 
+            IBookValueRepository bookValueRepository)
         {
             _dataContext = datacontext;
+            _bookAutorRepository = bookAutorRepository;
+            _bookSubjectRepository = bookSubjectRepository;
+            _bookValueRepository = bookValueRepository;
             _dbSet = _dataContext.Book;
         }
 
