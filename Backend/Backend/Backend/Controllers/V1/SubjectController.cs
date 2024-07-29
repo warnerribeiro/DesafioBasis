@@ -18,7 +18,7 @@ namespace Web.Api.Controllers.V1
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Subject>>> Get()
+        public async Task<ActionResult<IEnumerable<Subject>>> GetAsync()
         {
             return Ok(await _subjectRepository.GetAsync());
         }
@@ -37,31 +37,31 @@ namespace Web.Api.Controllers.V1
         }
 
         [HttpPost]
-        public async Task<ActionResult<Subject>> Post(Subject subject)
+        public async Task<ActionResult<Subject>> PostAsync(Subject subject)
         {
             if (subject == null)
             {
                 return BadRequest();
             }
 
-            return await _subjectRepository.Add(subject);
+            return Ok(await _subjectRepository.AddAsync(subject));
         }
 
         [HttpPut("{subjectId:int}")]
-        public async Task<ActionResult<Subject>> Put(int subjectId, Subject subject)
+        public async Task<ActionResult<Subject>> PutAsync(int subjectId, Subject subject)
         {
             if (subject == null || subjectId != subject.SubjectId) 
             {
-                return BadRequest();
+                return BadRequest("Id de atualização do objecto não confere.");
             }
             
-            return Ok(await _subjectRepository.Update(subject));
+            return Ok(await _subjectRepository.UpdateAsync(subject));
         }
 
         [HttpDelete("{subjectId:int}")]
-        public async Task<ActionResult> Delete(int subjectId)
+        public async Task<ActionResult> DeleteAsync(int subjectId)
         {
-            await _subjectRepository.Remove(subjectId);
+            await _subjectRepository.RemoveAsync(subjectId);
             return Ok();
         }
     }

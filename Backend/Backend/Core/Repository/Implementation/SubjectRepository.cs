@@ -25,7 +25,7 @@ namespace Core.Repository.Implementation
             return _dbSet.Find(subjectId);
         }
 
-        public async Task<Subject> Add(Subject subject)
+        public async Task<Subject> AddAsync(Subject subject)
         {
             await _dbSet.AddAsync(subject);
             await _dataContext.SaveChangesAsync();
@@ -33,7 +33,7 @@ namespace Core.Repository.Implementation
             return subject;
         }
 
-        public async Task<Subject> Update(Subject subject)
+        public async Task<Subject> UpdateAsync(Subject subject)
         {
             _dbSet.Update(subject);
             await _dataContext.SaveChangesAsync();
@@ -41,7 +41,7 @@ namespace Core.Repository.Implementation
             return subject;
         }
 
-        public async Task Remove(int SubjectId)
+        public async Task RemoveAsync(int SubjectId)
         {
             var Subject = Get(SubjectId);
 

@@ -18,15 +18,15 @@ namespace Web.Api.Controllers.V1
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Book>>> Get()
+        public async Task<ActionResult<IEnumerable<Book>>> GetAsync()
         {
             return Ok(await _bookRepository.GetAsync());
         }
 
         [HttpGet("{bookId:int}")]
-        public async Task<ActionResult<Book>> Get(int bookId)
+        public async Task<ActionResult<Book>> GetAsync(int bookId)
         {
-            var book = await _bookRepository.Get(bookId);
+            var book = await _bookRepository.GetAsync(bookId);
 
             if (book == null)
             {
@@ -37,26 +37,26 @@ namespace Web.Api.Controllers.V1
         }
 
         [HttpPost]
-        public async Task<ActionResult<Book>> Post(Book book)
+        public async Task<ActionResult<Book>> PostAsync(Book book)
         {
-            return await _bookRepository.Add(book);
+            return Ok(await _bookRepository.AddAsync(book));
         }
 
         [HttpPut("{bookId:int}")]
-        public async Task<ActionResult<Book>> Put(int bookId, Book book)
+        public async Task<ActionResult<Book>> PutAsync(int bookId, Book book)
         {
             if (book == null || bookId != book.BookId)
             {
                 return BadRequest("Id de atualização do objecto não confere.");
             }
 
-            return Ok(await _bookRepository.Update(book));
+            return Ok(await _bookRepository.UpdateAsync(book));
         }
 
         [HttpDelete("{bookId:int}")]
-        public async Task<ActionResult> Delete(int bookId)
+        public async Task<ActionResult> DeleteAsync(int bookId)
         {
-            await _bookRepository.Remove(bookId);
+            await _bookRepository.RemoveAsync(bookId);
             return Ok();
         }
     }

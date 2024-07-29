@@ -8,16 +8,16 @@ namespace Core.Repository
 
         BookSubject? Get(int bookSubjectId);
 
-        Task<BookSubject> Add(BookSubject bookSubject);
+        Task<BookSubject> AddAsync(BookSubject bookSubject);
 
-        Task Add(IEnumerable<BookSubject> bookSubject);
+        Task AddAsync(IEnumerable<BookSubject> bookSubject);
 
-        Task<BookSubject> Update(BookSubject bookSubject);
+        Task<BookSubject> UpdateAsync(BookSubject bookSubject);
 
-        Task Remove(int bookSubjectId);
+        Task RemoveAsync(int bookSubjectId);
 
-        Task Remove(BookSubject bookSubject);
+        Task RemoveAsync(BookSubject bookSubject);
 
-        Task Remove(IEnumerable<BookSubject> bookSubject);
+        Task RemoveAsync(IEnumerable<BookSubject> bookSubject);
     }
 }

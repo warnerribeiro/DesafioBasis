@@ -25,7 +25,7 @@ namespace Core.Repository.Implementation
             return _dbSet.Find(originPurchaseId);
         }
 
-        public async Task<OriginPurchase> Add(OriginPurchase originPurchase)
+        public async Task<OriginPurchase> AddAsync(OriginPurchase originPurchase)
         {
             await _dbSet.AddAsync(originPurchase);
             await _dataContext.SaveChangesAsync();
@@ -33,7 +33,7 @@ namespace Core.Repository.Implementation
             return originPurchase;
         }
 
-        public async Task<OriginPurchase> Update(OriginPurchase originPurchase)
+        public async Task<OriginPurchase> UpdateAsync(OriginPurchase originPurchase)
         {
             _dbSet.Update(originPurchase);
             await _dataContext.SaveChangesAsync();
@@ -41,7 +41,7 @@ namespace Core.Repository.Implementation
             return originPurchase;
         }
 
-        public async Task Remove(int originPurchaseId)
+        public async Task RemoveAsync(int originPurchaseId)
         {
             var originPurchase = Get(originPurchaseId);
 

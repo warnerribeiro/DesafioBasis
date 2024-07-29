@@ -8,16 +8,16 @@ namespace Core.Repository
 
         BookAuthor? Get(int bookAuthorId);
 
-        Task<BookAuthor> Add(BookAuthor bookAuthor);
+        Task<BookAuthor> AddAsync(BookAuthor bookAuthor);
 
-        Task Add(IEnumerable<BookAuthor> bookAuthor);
+        Task AddAsync(IEnumerable<BookAuthor> bookAuthor);
 
-        Task<BookAuthor> Update(BookAuthor bookAuthor);
+        Task<BookAuthor> UpdateAsync(BookAuthor bookAuthor);
 
-        Task Remove(int bookAuthorId);
+        Task RemoveAsync(int bookAuthorId);
 
-        Task Remove(BookAuthor bookAuthor);
+        Task RemoveAsync(BookAuthor bookAuthor);
 
-        Task Remove(IEnumerable<BookAuthor> bookAuthor);
+        Task RemoveAsync(IEnumerable<BookAuthor> bookAuthor);
     }
 }

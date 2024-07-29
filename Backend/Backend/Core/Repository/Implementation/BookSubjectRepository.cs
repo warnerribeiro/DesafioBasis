@@ -15,7 +15,7 @@ namespace Core.Repository.Implementation
             _dbSet = _dataContext.BookSubject;
         }
 
-        public async Task<BookSubject> Add(BookSubject bookSubject)
+        public async Task<BookSubject> AddAsync(BookSubject bookSubject)
         {
             await _dbSet.AddAsync(bookSubject);
             await _dataContext.SaveChangesAsync();
@@ -23,7 +23,7 @@ namespace Core.Repository.Implementation
             return bookSubject;
         }
 
-        public async Task Add(IEnumerable<BookSubject> bookSubject)
+        public async Task AddAsync(IEnumerable<BookSubject> bookSubject)
         {
             await _dbSet.AddRangeAsync(bookSubject);
             await _dataContext.SaveChangesAsync();
@@ -39,20 +39,20 @@ namespace Core.Repository.Implementation
             return await _dbSet.AsNoTracking().ToListAsync();
         }
 
-        public async Task Remove(int bookSubjectId)
+        public async Task RemoveAsync(int bookSubjectId)
         {
             var bookSubject = Get(bookSubjectId);
 
-            await Remove(bookSubject);
+            await RemoveAsync(bookSubject);
         }
 
-        public async Task Remove(IEnumerable<BookSubject> bookSubject)
+        public async Task RemoveAsync(IEnumerable<BookSubject> bookSubject)
         {
             _dbSet.RemoveRange(bookSubject);
             await _dataContext.SaveChangesAsync();
         }
 
-        public async Task Remove(BookSubject bookSubject)
+        public async Task RemoveAsync(BookSubject bookSubject)
         {
             if (bookSubject != null)
             {
@@ -61,7 +61,7 @@ namespace Core.Repository.Implementation
             }
         }
 
-        public async Task<BookSubject> Update(BookSubject bookSubject)
+        public async Task<BookSubject> UpdateAsync(BookSubject bookSubject)
         {
             _dbSet.Update(bookSubject);
             await _dataContext.SaveChangesAsync();

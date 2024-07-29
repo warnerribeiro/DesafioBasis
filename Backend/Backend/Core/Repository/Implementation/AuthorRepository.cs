@@ -25,7 +25,7 @@ namespace Core.Repository.Implementation
             return _dbSet.Find(authorId);
         }
 
-        public async Task<Author> Add(Author author)
+        public async Task<Author> AddAsync(Author author)
         {
             await _dbSet.AddAsync(author);
             await _dataContext.SaveChangesAsync();
@@ -33,7 +33,7 @@ namespace Core.Repository.Implementation
             return author;
         }
 
-        public async Task<Author> Update(Author author)
+        public async Task<Author> UpdateAsync(Author author)
         {
             _dbSet.Update(author);
             await _dataContext.SaveChangesAsync();
@@ -41,7 +41,7 @@ namespace Core.Repository.Implementation
             return author;
         }
 
-        public async Task Remove(int authorId)
+        public async Task RemoveAsync(int authorId)
         {
             var author = Get(authorId);
 

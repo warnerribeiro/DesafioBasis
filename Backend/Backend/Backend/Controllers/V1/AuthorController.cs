@@ -19,7 +19,7 @@ namespace Web.Api.Controllers.V1
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Author>>> Get()
+        public async Task<ActionResult<IEnumerable<Author>>> GetAsync()
         {
             return Ok(await _authorRepository.GetAsync());
         }
@@ -38,26 +38,26 @@ namespace Web.Api.Controllers.V1
         }
 
         [HttpPost]
-        public async Task<ActionResult<Author>> Post(Author author)
+        public async Task<ActionResult<Author>> PostAsync(Author author)
         {
-            return await _authorRepository.Add(author);
+            return Ok(await _authorRepository.AddAsync(author));
         }
 
         [HttpPut("{authorId:int}")]
-        public async Task<ActionResult<Author>> Put(int authorId, Author author)
+        public async Task<ActionResult<Author>> PutAsync(int authorId, Author author)
         {
             if (author == null || authorId != author.AuthorId)
             {
                 return BadRequest("Id de atualização do objecto não confere.");
             }
 
-            return Ok(await _authorRepository.Update(author));
+            return Ok(await _authorRepository.UpdateAsync(author));
         }
 
         [HttpDelete("{authorId:int}")]
-        public async Task<ActionResult> Delete(int authorId)
+        public async Task<ActionResult> DeleteAsync(int authorId)
         {
-            await _authorRepository.Remove(authorId);
+            await _authorRepository.RemoveAsync(authorId);
             return Ok();
         }
     }

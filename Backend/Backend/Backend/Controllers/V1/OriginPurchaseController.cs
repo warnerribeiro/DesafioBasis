@@ -18,7 +18,7 @@ namespace Web.Api.Controllers.V1
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<OriginPurchase>>> Get()
+        public async Task<ActionResult<IEnumerable<OriginPurchase>>> GetAsync()
         {
             return Ok(await _originPurchaRepository.GetAsync());
         }
@@ -37,26 +37,26 @@ namespace Web.Api.Controllers.V1
         }
 
         [HttpPost]
-        public async Task<ActionResult<OriginPurchase>> Post(OriginPurchase originPurchase)
+        public async Task<ActionResult<OriginPurchase>> PostAsync(OriginPurchase originPurchase)
         {
-            return await _originPurchaRepository.Add(originPurchase);
+            return Ok(await _originPurchaRepository.AddAsync(originPurchase));
         }
 
         [HttpPut("{originPurchaseId:int}")]
-        public async Task<ActionResult<OriginPurchase>> Put(int originPurchaseId, OriginPurchase originPurchase)
+        public async Task<ActionResult<OriginPurchase>> PutAsync(int originPurchaseId, OriginPurchase originPurchase)
         {
             if (originPurchase == null || originPurchaseId != originPurchase.OriginPurchaseId)
             {
                 return BadRequest("Id de atualização do objecto não confere.");
             }
 
-            return Ok(await _originPurchaRepository.Update(originPurchase));
+            return Ok(await _originPurchaRepository.UpdateAsync(originPurchase));
         }
 
         [HttpDelete("{originPurchaseId:int}")]
-        public async Task<ActionResult> Delete(int originPurchaseId)
+        public async Task<ActionResult> DeleteAsync(int originPurchaseId)
         {
-            await _originPurchaRepository.Remove(originPurchaseId);
+            await _originPurchaRepository.RemoveAsync(originPurchaseId);
             return Ok();
         }
     }

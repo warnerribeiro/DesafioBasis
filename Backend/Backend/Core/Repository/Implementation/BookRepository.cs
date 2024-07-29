@@ -29,7 +29,7 @@ namespace Core.Repository.Implementation
             return await _dbSet.AsNoTracking().ToListAsync();
         }
 
-        public async Task<Book?> Get(int bookId)
+        public async Task<Book?> GetAsync(int bookId)
         {
             return await _dbSet
                 .Include(a => a.BookAuthor)
@@ -38,7 +38,7 @@ namespace Core.Repository.Implementation
                 .SingleAsync(a => a.BookId == bookId);
         }
 
-        public async Task<Book> Add(Book book)
+        public async Task<Book> AddAsync(Book book)
         {
             await _dbSet.AddAsync(book);
             await _dataContext.SaveChangesAsync();
@@ -46,29 +46,29 @@ namespace Core.Repository.Implementation
             return book;
         }
 
-        public async Task<Book> Update(Book bookView)
+        public async Task<Book> UpdateAsync(Book bookView)
         {
-            var bookModel = await Get(bookView.BookId);
+            var bookModel = await GetAsync(bookView.BookId);
 
             _dataContext.Entry(bookModel).CurrentValues.SetValues(bookView);
 
-            await _bookAutorRepository.Remove(bookModel.BookAuthor);
-            await _bookAutorRepository.Add(bookView.BookAuthor);
+            await _bookAutorRepository.RemoveAsync(bookModel.BookAuthor);
+            await _bookAutorRepository.AddAsync(bookView.BookAuthor);
 
-            await _bookSubjectRepository.Remove(bookModel.BookSubject);
-            await _bookSubjectRepository.Add(bookView.BookSubject);
+            await _bookSubjectRepository.RemoveAsync(bookModel.BookSubject);
+            await _bookSubjectRepository.AddAsync(bookView.BookSubject);
 
-            await _bookValueRepository.Remove(bookModel.BookValue);
-            await _bookValueRepository.Add(bookView.BookValue);
+            await _bookValueRepository.RemoveAsync(bookModel.BookValue);
+            await _bookValueRepository.AddAsync(bookView.BookValue);
 
             await _dataContext.SaveChangesAsync();
 
             return bookModel;
         }
 
-        public async Task Remove(int bookId)
+        public async Task RemoveAsync(int bookId)
         {
-            var book = await Get(bookId);
+            var book = await GetAsync(bookId);
 
             if (book != null)
             {

@@ -6,11 +6,11 @@ namespace Core.Repository
     {
         Author? Get(int authorId);
 
-        Task<Author> Add(Author author);
+        Task<Author> AddAsync(Author author);
 
-        Task<Author> Update(Author author);
+        Task<Author> UpdateAsync(Author author);
 
-        Task Remove(int authorId);
+        Task RemoveAsync(int authorId);
 
         Task<IEnumerable<Author>> GetAsync();
     }
