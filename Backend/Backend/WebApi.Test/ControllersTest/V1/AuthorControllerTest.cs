@@ -1,3 +1,4 @@
+using Castle.Core.Logging;
 using Core.Repository;
 using Domain.Model;
 using Microsoft.AspNetCore.Mvc;
@@ -9,13 +10,13 @@ namespace WebApi.Test.ControllersTest.V1
 {
     public class AuthorControllerTest : IDisposable
     {
-        private readonly Mock<IAuthorRepository> mockAuthor;
-        private readonly IAuthorRepository _authorRepository;
-        private readonly Mock<ILogger<AuthorController>> mockController;
+        private readonly Mock<IAuthorRepository> mockRepository;
+        private readonly Mock<ILogger<AuthorController>> _mockLogger;
         private readonly ILogger<AuthorController> _logger;
+        private readonly IAuthorRepository _repository;
         private bool _disposed = false;
 
-        AuthorController _authorController;
+        AuthorController _controller;
 
         Author author = new Author
         {
@@ -39,73 +40,77 @@ namespace WebApi.Test.ControllersTest.V1
 
         public AuthorControllerTest()
         {
-            mockAuthor = new(MockBehavior.Strict);
-            mockAuthor.Setup(a => a.Get(1)).Returns(() => author);
-            mockAuthor.Setup(a => a.GetAsync()).ReturnsAsync(() => authorList);
-            mockAuthor.Setup(a => a.AddAsync(author)).ReturnsAsync(() => author);
-            mockAuthor.Setup(a => a.UpdateAsync(author)).ReturnsAsync(() => author);
-            mockAuthor.Setup(a => a.RemoveAsync(1)).Returns(() => Task.Run(() => { }));
+            mockRepository = new(MockBehavior.Strict);
+            mockRepository.Setup(a => a.Get(1)).Returns(() => author);
+            mockRepository.Setup(a => a.GetAsync()).ReturnsAsync(() => authorList);
+            mockRepository.Setup(a => a.AddAsync(author)).ReturnsAsync(() => author);
+            mockRepository.Setup(a => a.UpdateAsync(author)).ReturnsAsync(() => author);
+            mockRepository.Setup(a => a.RemoveAsync(1)).Returns(() => Task.Run(() => { }));
 
-            _authorRepository = mockAuthor.Object;
-            _authorController = new AuthorController(null, _authorRepository);
+            _repository = mockRepository.Object;
+
+            _mockLogger = new(MockBehavior.Strict);
+            _logger = _mockLogger.Object;
+
+            _controller = new AuthorController(_logger, _repository);
         }
 
         [Fact]
         public async void GetAllReturnTest()
         {
-            var authorActionResult = await _authorController.GetAsync();
-            var result = (OkObjectResult)authorActionResult.Result;
+            var authorActionResult = await _controller.GetAsync();
+            var result = authorActionResult.Result as OkObjectResult;
 
-            Assert.Equal(result.Value, authorList);
-            Mock.Get(_authorRepository).Verify(a => a.GetAsync());
+            Assert.Equal(result?.Value, authorList);
+            Mock.Get(_repository).Verify(a => a.GetAsync());
         }
 
         [Fact]
         public void GetIdReturnTest()
         {
-            var authorResult = (OkObjectResult)_authorController.Get(1).Result;
+            var authorResult = _controller.Get(1).Result as OkObjectResult;
 
-            Assert.Equal(authorResult.Value, author);
-            Mock.Get(_authorRepository).Verify(a => a.Get(1));
+            Assert.Equal(authorResult?.Value, author);
+            Mock.Get(_repository).Verify(a => a.Get(1));
         }
 
         [Fact]
         public async void PostReturnTest()
         {
-            var authorActionResult = await _authorController.PostAsync(author);
-            var result = (OkObjectResult)authorActionResult.Result;
+            var authorActionResult = await _controller.PostAsync(author);
+            var result = authorActionResult.Result as OkObjectResult;
 
-            Assert.Equal(result.Value, author);
-            Mock.Get(_authorRepository).Verify(a => a.AddAsync(author));
+            Assert.Equal(result?.Value, author);
+            Mock.Get(_repository).Verify(a => a.AddAsync(author));
         }
 
         [Fact]
         public async void PutReturnTest()
         {
-            var authorActionResult = await _authorController.PutAsync(1, author);
-            var result = (OkObjectResult)authorActionResult.Result;
+            var authorActionResult = await _controller.PutAsync(1, author);
+            var result = authorActionResult.Result as OkObjectResult;
 
-            Assert.Equal(result.Value, author);
-            Mock.Get(_authorRepository).Verify(a => a.UpdateAsync(author));
+            Assert.Equal(result?.Value, author);
+            Mock.Get(_repository).Verify(a => a.UpdateAsync(author));
         }
 
         [Fact]
         public async void PutValidateDiffIdest()
         {
-            var authorActionResult = await _authorController.PutAsync(2, author);
-            var result = (BadRequestObjectResult)authorActionResult.Result;
+            var authorActionResult = await _controller.PutAsync(2, author);
+            var result = authorActionResult.Result as BadRequestObjectResult;
 
-            Assert.Equal(result.Value, "Id de atualização do objecto não confere.");
-            Assert.Equal(result.StatusCode, 400);
+            Assert.Equal(result?.Value, "Id de atualização do objecto não confere.");
+            Assert.Equal(result?.StatusCode, 400);
             Assert.IsType<BadRequestObjectResult>(authorActionResult.Result);
         }
 
         [Fact]
         public async void DeleteReturnTest()
         {
-            var authorActionResult = await _authorController.DeleteAsync(1);
+            var authorActionResult = await _controller.DeleteAsync(1);
 
-            Mock.Get(_authorRepository).Verify(a => a.RemoveAsync(1));
+            Mock.Get(_repository).Verify(a => a.RemoveAsync(1));
         }
 
         protected virtual void Dispose(bool disposing)
@@ -120,7 +125,7 @@ namespace WebApi.Test.ControllersTest.V1
 
             }
 
-            mockAuthor.Reset();
+            mockRepository.Reset();
             _disposed = true;
         }
 
@@ -133,7 +138,7 @@ namespace WebApi.Test.ControllersTest.V1
 
         ~AuthorControllerTest()
         {
-            mockAuthor.Reset();
+            mockRepository.Reset();
             Dispose(false);
         }
     }

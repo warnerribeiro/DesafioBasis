@@ -15,7 +15,7 @@ Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "Relatórios", "Projeto de R
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{706FE1FC-0C36-46F1-8FE4-2E52F6ED35A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Test", "WebApi.Test\WebApi.Test.csproj", "{8F90E82A-8DD9-415A-A338-9E2A765D995C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.UnitTest", "WebApi.Test\WebApi.UnitTest.csproj", "{8F90E82A-8DD9-415A-A338-9E2A765D995C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

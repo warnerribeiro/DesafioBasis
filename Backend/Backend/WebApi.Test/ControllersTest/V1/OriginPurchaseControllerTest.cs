@@ -7,14 +7,14 @@ using Web.Api.Controllers.V1;
 
 namespace WebApi.Test.ControllersTest.V1
 {
-    public class OriginPurchaseControllerTest
+    public class OriginPurchaseControllerTest : IDisposable
     {
         private readonly Mock<IOriginPurchaseRepository> mockRepository;
         private readonly IOriginPurchaseRepository _repository;
-        private readonly Mock<ILogger<OriginPurchaseController>> mockController;
+        private readonly Mock<ILogger<OriginPurchaseController>> _mockLogger;
+        private readonly ILogger<OriginPurchaseController> _logger;
         private readonly OriginPurchaseController _controller;
 
-        private readonly ILogger<OriginPurchaseController> _logger;
         private bool _disposed = false;
 
         OriginPurchase obj = new OriginPurchase
@@ -47,16 +47,20 @@ namespace WebApi.Test.ControllersTest.V1
             mockRepository.Setup(a => a.RemoveAsync(1)).Returns(() => Task.Run(() => { }));
 
             _repository = mockRepository.Object;
-            _controller = new OriginPurchaseController(null, _repository);
+
+            _mockLogger = new(MockBehavior.Strict);
+            _logger = _mockLogger.Object;
+
+            _controller = new OriginPurchaseController(_logger, _repository);
         }
 
         [Fact]
         public async void GetAllReturnTest()
         {
             var actionResult = await _controller.GetAsync();
-            var result = (OkObjectResult)actionResult.Result;
+            var result = actionResult.Result as OkObjectResult;
 
-            Assert.Equal(result.Value, list);
+            Assert.Equal(result?.Value, list);
             Mock.Get(_repository).Verify(a => a.GetAsync());
         }
 
@@ -64,9 +68,9 @@ namespace WebApi.Test.ControllersTest.V1
         public void GetIdReturnTest()
         {
             var actionResult = _controller.Get(1);
-            var result = (OkObjectResult)actionResult.Result;
+            var result = actionResult.Result as OkObjectResult;
 
-            Assert.Equal(result.Value, obj);
+            Assert.Equal(result?.Value, obj);
             Mock.Get(_repository).Verify(a => a.Get(1));
         }
 
@@ -74,9 +78,9 @@ namespace WebApi.Test.ControllersTest.V1
         public async void PostReturnTest()
         {
             var actionResult = await _controller.PostAsync(obj);
-            var result = (OkObjectResult)actionResult.Result;
+            var result = actionResult.Result as OkObjectResult;
 
-            Assert.Equal(result.Value, obj);
+            Assert.Equal(result?.Value, obj);
             Mock.Get(_repository).Verify(a => a.AddAsync(obj));
         }
 
@@ -84,9 +88,9 @@ namespace WebApi.Test.ControllersTest.V1
         public async void PutReturnTest()
         {
             var actionResult = await _controller.PutAsync(1, obj);
-            var result = (OkObjectResult)actionResult.Result;
+            var result = actionResult.Result as OkObjectResult;
 
-            Assert.Equal(result.Value, obj);
+            Assert.Equal(result?.Value, obj);
             Mock.Get(_repository).Verify(a => a.UpdateAsync(obj));
         }
 
@@ -94,10 +98,10 @@ namespace WebApi.Test.ControllersTest.V1
         public async void PutValidateDiffIdest()
         {
             var actionResult = await _controller.PutAsync(2, obj);
-            var result = (BadRequestObjectResult)actionResult.Result;
+            var result = actionResult.Result as BadRequestObjectResult;
 
-            Assert.Equal(result.Value, "Id de atualização do objecto não confere.");
-            Assert.Equal(result.StatusCode, 400);
+            Assert.Equal(result?.Value, "Id de atualização do objecto não confere.");
+            Assert.Equal(result?.StatusCode, 400);
             Assert.IsType<BadRequestObjectResult>(actionResult.Result);
         }
 

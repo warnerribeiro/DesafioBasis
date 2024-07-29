@@ -7,14 +7,14 @@ using Web.Api.Controllers.V1;
 
 namespace WebApi.Test.ControllersTest.V1
 {
-    public class BookControllerTest
+    public class BookControllerTest : IDisposable
     {
         private readonly Mock<IBookRepository> mockRepository;
         private readonly IBookRepository _repository;
-        private readonly Mock<ILogger<BookController>> mockController;
+        private readonly Mock<ILogger<BookController>> _mockLogger;
+        private readonly ILogger<BookController> _logger;
         private readonly BookController _controller;
 
-        private readonly ILogger<BookController> _logger;
         private bool _disposed = false;
 
         Book obj = new Book
@@ -56,16 +56,20 @@ namespace WebApi.Test.ControllersTest.V1
             mockRepository.Setup(a => a.RemoveAsync(1)).Returns(() => Task.Run(() => { }));
 
             _repository = mockRepository.Object;
-            _controller = new BookController(null, _repository);
+
+            _mockLogger = new(MockBehavior.Strict);
+            _logger = _mockLogger.Object;
+
+            _controller = new BookController(_logger, _repository);
         }
 
         [Fact]
         public async void GetAllReturnTest()
         {
             var actionResult = await _controller.GetAsync();
-            var result = (OkObjectResult)actionResult.Result;
+            var result = actionResult.Result as OkObjectResult;
 
-            Assert.Equal(result.Value, list);
+            Assert.Equal(result?.Value, list);
             Mock.Get(_repository).Verify(a => a.GetAsync());
         }
 
@@ -73,9 +77,9 @@ namespace WebApi.Test.ControllersTest.V1
         public async void GetIdReturnTest()
         {
             var actionResult = await _controller.GetAsync(1);
-            var result = (OkObjectResult)actionResult.Result;
+            var result = actionResult.Result as OkObjectResult;
 
-            Assert.Equal(result.Value, obj);
+            Assert.Equal(result?.Value, obj);
             Mock.Get(_repository).Verify(a => a.GetAsync(1));
         }
 
@@ -83,9 +87,9 @@ namespace WebApi.Test.ControllersTest.V1
         public async void PostReturnTest()
         {
             var authorActionResult = await _controller.PostAsync(obj);
-            var result = (OkObjectResult)authorActionResult.Result;
+            var result = authorActionResult.Result as OkObjectResult;
 
-            Assert.Equal(result.Value, obj);
+            Assert.Equal(result?.Value, obj);
             Mock.Get(_repository).Verify(a => a.AddAsync(obj));
         }
 
@@ -93,9 +97,9 @@ namespace WebApi.Test.ControllersTest.V1
         public async void PutReturnTest()
         {
             var authorActionResult = await _controller.PutAsync(1, obj);
-            var result = (OkObjectResult)authorActionResult.Result;
+            var result = authorActionResult.Result as OkObjectResult;
 
-            Assert.Equal(result.Value, obj);
+            Assert.Equal(result?.Value, obj);
             Mock.Get(_repository).Verify(a => a.UpdateAsync(obj));
         }
 
@@ -103,10 +107,10 @@ namespace WebApi.Test.ControllersTest.V1
         public async void PutValidateDiffIdest()
         {
             var authorActionResult = await _controller.PutAsync(2, obj);
-            var result = (BadRequestObjectResult)authorActionResult.Result;
+            var result = authorActionResult.Result as BadRequestObjectResult;
 
-            Assert.Equal(result.Value, "Id de atualização do objecto não confere.");
-            Assert.Equal(result.StatusCode, 400);
+            Assert.Equal(result?.Value, "Id de atualização do objecto não confere.");
+            Assert.Equal(result?.StatusCode, 400);
             Assert.IsType<BadRequestObjectResult>(authorActionResult.Result);
         }
 
