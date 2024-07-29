@@ -39,7 +39,7 @@ namespace Web.Api.Controllers.V1
         [HttpPost]
         public async Task<ActionResult<OriginPurchase>> PostAsync(OriginPurchase originPurchase)
         {
-            return Ok(await _originPurchaRepository.AddAsync(originPurchase));
+            return Created("", await _originPurchaRepository.AddAsync(originPurchase));
         }
 
         [HttpPut("{originPurchaseId:int}")]

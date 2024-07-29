@@ -44,7 +44,7 @@ namespace Web.Api.Controllers.V1
                 return BadRequest();
             }
 
-            return Ok(await _subjectRepository.AddAsync(subject));
+            return Created("", await _subjectRepository.AddAsync(subject));
         }
 
         [HttpPut("{subjectId:int}")]

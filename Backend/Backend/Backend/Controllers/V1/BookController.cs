@@ -39,7 +39,7 @@ namespace Web.Api.Controllers.V1
         [HttpPost]
         public async Task<ActionResult<Book>> PostAsync(Book book)
         {
-            return Ok(await _bookRepository.AddAsync(book));
+            return Created("", await _bookRepository.AddAsync(book));
         }
 
         [HttpPut("{bookId:int}")]

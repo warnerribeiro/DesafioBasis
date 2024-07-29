@@ -40,7 +40,7 @@ namespace Web.Api.Controllers.V1
         [HttpPost]
         public async Task<ActionResult<Author>> PostAsync(Author author)
         {
-            return Ok(await _authorRepository.AddAsync(author));
+            return Created("", await _authorRepository.AddAsync(author));
         }
 
         [HttpPut("{authorId:int}")]
