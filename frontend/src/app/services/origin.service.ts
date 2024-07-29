@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Origin } from '../interfaces/origin';
+import * as Config from '../config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OriginService {
-  baseUrl: string = 'http://localhost:5172/api/originpurchase/';
+  baseUrl: string = Config.url + 'originpurchase/';
 
   constructor(private http: HttpClient) { }
 

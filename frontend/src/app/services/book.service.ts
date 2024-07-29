@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Book } from '../interfaces/book';
+import * as Config from '../config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookService {
 
-  baseUrl: string = 'http://localhost:5172/api/book/';
+  baseUrl: string = Config.url + 'book/';
 
   constructor(private http: HttpClient) { }
 
