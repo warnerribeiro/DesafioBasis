@@ -9,7 +9,7 @@ import * as Config from '../config';
 })
 export class BookService {
 
-  baseUrl: string = Config.url + 'book/';
+  baseUrl: string = Config.urlApi + 'book/';
 
   constructor(private http: HttpClient) { }
 

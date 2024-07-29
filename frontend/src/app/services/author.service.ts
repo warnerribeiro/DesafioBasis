@@ -9,7 +9,7 @@ import * as Config from '../config';
 })
 export class AuthorService {
 
-  baseUrl: string = Config.url + 'author/';
+  baseUrl: string = Config.urlApi + 'author/';
 
   constructor(private http: HttpClient) { }
 

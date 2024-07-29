@@ -8,7 +8,7 @@ import * as Config from '../config';
   providedIn: 'root'
 })
 export class OriginService {
-  baseUrl: string = Config.url + 'originpurchase/';
+  baseUrl: string = Config.urlApi + 'originpurchase/';
 
   constructor(private http: HttpClient) { }
 

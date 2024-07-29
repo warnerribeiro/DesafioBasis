@@ -9,7 +9,7 @@ import * as Config from '../config';
 })
 export class SubjectService {
 
-  baseUrl: string = Config.url + 'subject/';
+  baseUrl: string = Config.urlApi + 'subject/';
 
   constructor(private http: HttpClient) { }
 
