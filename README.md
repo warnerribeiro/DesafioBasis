@@ -29,4 +29,4 @@ Foi utilizado o comando abaixo para execução no chrome.
 
     "chrome.exe" --disable-web-security --user-data-dir=c:\tmpChromeSession --ignore-certificate-errors
 
-Para executar o relatorio é necessario ter uma instancia do Reporting Services configurada, e realizar upload do relatorio para a instancia e realizar alteração do caminho do relatorio no app.componet.html no frontend
+Para executar o relatorio é necessario ter uma instancia do Reporting Services configurada, e realizar upload do relatorio para a instancia e realizar alteração do caminho do relatorio no app.componet.html no frontend, o script dentro do projeto model no backend deve ser executado no banco de dados para criação da view.
