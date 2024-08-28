@@ -23,14 +23,15 @@ export class BooklistComponent {
 
   getList() {
     this.loading = true;
+    console.time('GetAll Books');
     this.bookService.getAll().subscribe({
       next: (response: Book[]) => {
         this.livro = response;
       },
       error: (error: any) => {
-        console.log('error===>', error);
+        console.log('GetAll Books Error ==>', error);
       },
-      complete: () => { this.loading = false }
+      complete: () => { this.loading = false; console.table(this.livro); console.timeEnd('GetAll Books'); }
     });
   }
 

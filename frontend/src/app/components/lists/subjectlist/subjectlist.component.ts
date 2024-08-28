@@ -23,15 +23,15 @@ export class SubjectlistComponent {
 
   getList() {
     this.loading = true;
+    console.time('GetAll Subjects');
     this.subjectService.getAll().subscribe({
       next: (response: Subject[]) => {
-        console.log('response===>', response);
         this.assuntos = response;
       },
       error: (error: any) => {
-        console.log('error===>', error);
+        console.log('GetAll Subjects Error ==>', error);
       },
-      complete: () => { this.loading = false }
+      complete: () => { this.loading = false; console.table(this.assuntos); console.timeEnd('GetAll Subjects'); }
     });
   }
 

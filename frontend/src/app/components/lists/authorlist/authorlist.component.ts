@@ -30,9 +30,9 @@ export class AuthorlistComponent {
         this.autor = response;
       },
       error: (error: any) => {
-        console.log('error===>', error);
+        console.log('GetAll Authors Error ==>', error);
       },
-      complete: () => { this.loading = false; console.timeEnd('GetAll Author'); }
+      complete: () => { this.loading = false; console.table(this.autor);  console.timeEnd('GetAll Author'); }
     });
     
   }
