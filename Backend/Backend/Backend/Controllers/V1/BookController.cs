@@ -6,7 +6,7 @@ namespace Web.Api.Controllers.V1
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class BookController : Controller
+    public class BookController : ControllerBase
     {
         private readonly IBookRepository _bookRepository;
         private readonly ILogger<BookController> _logger;

@@ -39,7 +39,7 @@ export class BooklistComponent {
       next: (response: Book[]) => {
       },
       error: (error: any) => {
-        console.log('delteerror===>', error);
+        console.log('delete error===>', error);
       },
       complete: () => { this.getList(); }
     });

@@ -23,16 +23,18 @@ export class AuthorlistComponent {
 
   getList() {
     this.loading = true;
+    console.time('GetAll Author');
     this.authorService.getAll().subscribe({
       next: (response: Author[]) => {
-        console.log('response===>', response);
+        //console.log('Get', response);
         this.autor = response;
       },
       error: (error: any) => {
         console.log('error===>', error);
       },
-      complete: () => { this.loading = false }
+      complete: () => { this.loading = false; console.timeEnd('GetAll Author'); }
     });
+    
   }
 
   delete(id: number) {

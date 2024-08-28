@@ -41,7 +41,7 @@
                     <div class="mb-3">
                         <label for="edition" class="form-label">Edição:</label>
                         <input name="edition" type="number" class="form-control" id="edition" placeholder="ex: 1"
-                            required formControlName="edition">
+                            required formControlName="edition" max="2147483647">
                     </div>
                     <small class="m-0 p-0"
                         *ngIf="(form?.controls?.edition?.errors?.['required'] || !form?.controls?.edition?.valid) && (form?.controls?.edition?.dirty || form?.controls?.edition?.touched)">

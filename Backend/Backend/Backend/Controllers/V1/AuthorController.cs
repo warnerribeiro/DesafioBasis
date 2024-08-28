@@ -7,7 +7,7 @@ namespace Web.Api.Controllers.V1
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AuthorController : Controller
+    public class AuthorController : ControllerBase
     {
         private readonly IAuthorRepository _authorRepository;
         private readonly ILogger<AuthorController> _logger;

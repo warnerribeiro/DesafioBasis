@@ -1,6 +1,8 @@
 using Backend.Model;
 using Core.Repository;
 using Core.Repository.Implementation;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Web.Api.Middlewares;
 
@@ -11,6 +13,16 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var connectionString = builder.Configuration.GetSection("ConnectionStrings:SqlServerDev").Value;
+
+builder.Services.AddHealthChecks().AddSqlServer(connectionString); // Implementar healcheck com UI depois, pesquisar sobre
+builder.Services.AddHealthChecksUI(options =>
+{
+    options.SetEvaluationTimeInSeconds(5);
+    options.MaximumHistoryEntriesPerEndpoint(10);
+    options.AddHealthCheckEndpoint("API com Health Checks", "/health");
+}).AddSqlServerStorage("name=ConnectionStrings:SqlServerHealthCheck");
 
 builder.Services.AddDbContext<DataContext>(opt => opt.UseSqlServer("name=ConnectionStrings:SqlServerDev"));
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
@@ -25,6 +37,8 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.IgnoreNullValues = true;
 });
+
+builder.Services.AddCors();
 
 //builder.Services.AddProblemDetails();
 
@@ -52,11 +66,21 @@ if (app.Environment.IsDevelopment())
 //    app.UseExceptionHandler("/error");
 //}
 
+app.UseHealthChecks("/health", new HealthCheckOptions
+{
+    Predicate = p => true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
+
+app.UseHealthChecksUI(options => { options.UIPath = "/dashboard"; });
+
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCors(cors => cors.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
 app.MapControllers();
 

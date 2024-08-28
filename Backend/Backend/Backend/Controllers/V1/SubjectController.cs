@@ -6,7 +6,7 @@ namespace Web.Api.Controllers.V1
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class SubjectController : Controller
+    public class SubjectController : ControllerBase
     {
         private readonly ISubjectRepository _subjectRepository;
         private readonly ILogger<SubjectController> _logger;
