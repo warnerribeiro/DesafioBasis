@@ -83,11 +83,6 @@ export class BookComponent {
           this.form.get('bookAuthor')?.setValue(response.bookAuthor.map(a => a.authorId.toString()));
           this.form.get('bookSubject')?.setValue(response.bookSubject.map(a => a.subjectId.toString()));
           this.bookvalue = response.bookValue;
-
-          var t = response.bookValue.forEach(element => {
-            var originFounded = this.origin.filter(a => a.originPurchaseId == element.originPurchaseId);
-            element.originName = originFounded[0].name;
-          });
         },
         error: (error: any) => {
           console.log('Error getting the author!', error);
