@@ -4,7 +4,7 @@ namespace Core.Repository
 {
     public interface IAuthorRepository
     {
-        Author? Get(int authorId);
+        Task<Author?> Get(int authorId);
 
         Task<Author> AddAsync(Author author);
 
@@ -12,6 +12,6 @@ namespace Core.Repository
 
         Task RemoveAsync(int authorId);
 
-        Task<IEnumerable<Author>> GetAsync();
+        IQueryable<Author> Get();
     }
 }

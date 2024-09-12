@@ -33,10 +33,7 @@ builder.Services.AddScoped<IBookSubjectRepository, BookSubjectRepository>();
 builder.Services.AddScoped<IBookValueRepository, BookValueRepository>();
 builder.Services.AddScoped<IOriginPurchaseRepository, OriginPurchaseRepository>();
 
-builder.Services.AddControllers().AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.IgnoreNullValues = true;
-});
+builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.IgnoreNullValues = true);
 
 builder.Services.AddCors();
 
@@ -55,11 +52,9 @@ if (app.Environment.IsDevelopment())
 
     //app.UseExceptionHandler("/error-development");
     //app.UseDeveloperExceptionPage();
-    using (var scope = app.Services.CreateScope())
-    {
-        var db = scope.ServiceProvider.GetRequiredService<DataContext>();
-        db.Database.Migrate();
-    }
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<DataContext>();
+    db.Database.Migrate();
 }
 //else
 //{
@@ -72,16 +67,21 @@ app.UseHealthChecks("/health", new HealthCheckOptions
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
 
-app.UseHealthChecksUI(options => { options.UIPath = "/dashboard"; });
+app.UseHealthChecksUI(options => options.UIPath = "/dashboard");
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
+app.UseHsts();
+
 app.UseAuthorization();
 
-app.UseCors(cors => cors.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+//app.UseCors(cors => cors.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 
 app.MapControllers();
 
 app.Run();
+
+// TODO Implementar Hangfire
+// TODO Implementar Identity

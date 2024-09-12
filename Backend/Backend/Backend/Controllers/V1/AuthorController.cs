@@ -1,7 +1,7 @@
 ﻿using Core.Repository;
 using Domain.Model;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
+using Microsoft.EntityFrameworkCore;
 
 namespace Web.Api.Controllers.V1
 {
@@ -21,7 +21,15 @@ namespace Web.Api.Controllers.V1
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Author>>> GetAsync()
         {
-            return Ok(await _authorRepository.GetAsync());
+            try
+            {
+                return Ok(await _authorRepository.Get().ToListAsync());
+            }
+            catch (Exception ex) 
+            {
+                _logger.Log(LogLevel.Error, ex, "Erro");
+                return BadRequest(ex);
+            }
         }
 
         [HttpGet("{authorId:int}")]

@@ -1,4 +1,3 @@
-using Castle.Core.Logging;
 using Core.Repository;
 using Domain.Model;
 using Microsoft.AspNetCore.Mvc;
@@ -42,7 +41,7 @@ namespace WebApi.Test.ControllersTest.V1
         {
             mockRepository = new(MockBehavior.Strict);
             mockRepository.Setup(a => a.Get(1)).Returns(() => author);
-            mockRepository.Setup(a => a.GetAsync()).ReturnsAsync(() => authorList);
+            mockRepository.Setup(a => a.Get()).Returns(() => authorList);
             mockRepository.Setup(a => a.AddAsync(author)).ReturnsAsync(() => author);
             mockRepository.Setup(a => a.UpdateAsync(author)).ReturnsAsync(() => author);
             mockRepository.Setup(a => a.RemoveAsync(1)).Returns(() => Task.Run(() => { }));
@@ -62,7 +61,7 @@ namespace WebApi.Test.ControllersTest.V1
             var result = authorActionResult.Result as OkObjectResult;
 
             Assert.Equal(result?.Value, authorList);
-            Mock.Get(_repository).Verify(a => a.GetAsync());
+            Mock.Get(_repository).Verify(a => a.Get());
         }
 
         [Fact]

@@ -15,14 +15,14 @@ namespace Core.Repository.Implementation
             _dbSet = _dataContext.Author;
         }
 
-        public async Task<IEnumerable<Author>> GetAsync()
+        public IQueryable<Author> Get()
         {
-            return await _dbSet.AsNoTracking().ToListAsync();
+            return _dbSet.AsNoTracking();
         }
 
-        public Author? Get(int authorId)
+        public async Task<Author?> Get(int authorId)
         {
-            return _dbSet.Find(authorId);
+            return await _dbSet.FindAsync(authorId);
         }
 
         public async Task<Author> AddAsync(Author author)
@@ -43,7 +43,7 @@ namespace Core.Repository.Implementation
 
         public async Task RemoveAsync(int authorId)
         {
-            var author = Get(authorId);
+            var author = await Get(authorId);
 
             if (author != null)
             {
