@@ -18,7 +18,7 @@ export class AuthorComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
 
-  protected form: any = this.formBuilder.group(
+  protected form = this.formBuilder.group(
     {
       name: this.formBuilder.control('', {
         validators: [Validators.required],
@@ -36,7 +36,7 @@ export class AuthorComponent {
           this.form.get('name')?.setValue(response.name);
           this.id = response.authorId;
         },
-        error: (error: any) => {
+        error: (error) => {
           console.log('Error getting the author!', error);
         },
         complete: () => { }
@@ -46,7 +46,7 @@ export class AuthorComponent {
 
   onSubmit() {
 
-    var author: Author = this.form.value;
+    const author: Author = this.form.value;
     author.authorId = this.id ?? 0;
 
     if (this.id) {
@@ -63,7 +63,7 @@ export class AuthorComponent {
         this.autor = response;
         this.router.navigateByUrl("/authorlist")
       },
-      error: (error: any) => {
+      error: (error) => {
         console.log('Error saving the author!', error);
       },
       complete: () => { }

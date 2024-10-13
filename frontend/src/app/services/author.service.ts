@@ -11,14 +11,14 @@ export class AuthorService {
 
   baseUrl: string = Config.urlApi + 'author/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   getAll(): Observable<Author[]> {
     return this.http.get<Author[]>(this.baseUrl);
   }
 
   get(id: number): Observable<Author> {
-    var url = this.baseUrl + id;
+    const url = this.baseUrl + id;
     return this.http.get<Author>(url);
   }
 
@@ -27,12 +27,12 @@ export class AuthorService {
   }
 
   put(id: number, assunto: Author): Observable<Author> {
-    var url = this.baseUrl + id;
+    const url = this.baseUrl + id;
     return this.http.put<Author>(url, assunto);
   }
 
   delete(id: number): Observable<any> {
-    var url: string = this.baseUrl + id;
+    const url: string = this.baseUrl + id;
     return this.http.delete(url);
   }
 }

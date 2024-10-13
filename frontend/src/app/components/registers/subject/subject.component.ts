@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Author } from 'src/app/interfaces/author';
 import { Subject } from 'src/app/interfaces/subject';
 import { SubjectService } from 'src/app/services/subject.service';
 
@@ -19,7 +18,7 @@ export class SubjectComponent {
 
   private id!: number;
 
-  protected form: any = this.formBuilder.group(
+  protected form = this.formBuilder.group(
     {
       description: this.formBuilder.control('', {
         validators: [Validators.required],
@@ -38,7 +37,7 @@ export class SubjectComponent {
           this.form.get('description')?.setValue(response.description);
           this.id = response.subjectId;
         },
-        error: (error: any) => {
+        error: (error) => {
           console.log('Error getting the subject!', error);
         },
         complete: () => { }
@@ -47,7 +46,7 @@ export class SubjectComponent {
   }
 
   onSubmit() {
-    var subject: Subject = this.form.value;
+    const subject: Subject = this.form.value;
     subject.subjectId = this.id ?? 0;
 
     if (this.id) {
@@ -64,7 +63,7 @@ export class SubjectComponent {
         //this.assuntos = response;
         this.router.navigateByUrl("/subjectlist");
       },
-      error: (error: any) => {
+      error: (error) => {
         console.log('Error saving the subject!', error);
       },
       complete: () => { }
@@ -78,7 +77,7 @@ export class SubjectComponent {
         //this.assuntos = response;
         this.router.navigateByUrl("/subjectlist");
       },
-      error: (error: any) => {
+      error: (error) => {
         console.log('Error updating the subject!', error);
       },
       complete: () => { }

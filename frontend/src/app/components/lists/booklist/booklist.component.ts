@@ -6,7 +6,7 @@ import { BookService } from 'src/app/services/book.service';
 @Component({
   selector: 'app-booklist',
   templateUrl: './booklist.component.html',
-  styleUrls: ['./booklist.component.css']
+  styleUrls: ['./booklist.component.css'],
 })
 export class BooklistComponent {
   public loading!: boolean;
@@ -15,7 +15,10 @@ export class BooklistComponent {
   /**
    *
    */
-  constructor(private bookService: BookService, private router: Router) { }
+  constructor(
+    private readonly bookService: BookService,
+    private readonly router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getList();
@@ -28,25 +31,30 @@ export class BooklistComponent {
       next: (response: Book[]) => {
         this.livro = response;
       },
-      error: (error: any) => {
+      error: (error) => {
         console.log('GetAll Books Error ==>', error);
       },
-      complete: () => { this.loading = false; console.table(this.livro); console.timeEnd('GetAll Books'); }
+      complete: () => {
+        this.loading = false;
+        console.table(this.livro);
+        console.timeEnd('GetAll Books');
+      },
     });
   }
 
   delete(id: number) {
     this.bookService.delete(id).subscribe({
-      next: (response: Book[]) => {
-      },
-      error: (error: any) => {
+      next: () => {},
+      error: (error) => {
         console.log('delete error===>', error);
       },
-      complete: () => { this.getList(); }
+      complete: () => {
+        this.getList();
+      },
     });
   }
 
   update(id: number) {
-    this.router.navigateByUrl("/book/" + id)
+    this.router.navigateByUrl('/book/' + id);
   }
 }

@@ -6,16 +6,18 @@ import { SubjectService } from 'src/app/services/subject.service';
 @Component({
   selector: 'app-subjectlist',
   templateUrl: './subjectlist.component.html',
-  styleUrls: ['./subjectlist.component.css']
+  styleUrls: ['./subjectlist.component.css'],
 })
 export class SubjectlistComponent {
-
   public loading!: boolean;
   public assuntos!: Subject[];
   /**
    *
    */
-  constructor(private subjectService: SubjectService, private router: Router) { }
+  constructor(
+    private readonly subjectService: SubjectService,
+    private readonly router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getList();
@@ -28,10 +30,14 @@ export class SubjectlistComponent {
       next: (response: Subject[]) => {
         this.assuntos = response;
       },
-      error: (error: any) => {
+      error: (error) => {
         console.log('GetAll Subjects Error ==>', error);
       },
-      complete: () => { this.loading = false; console.table(this.assuntos); console.timeEnd('GetAll Subjects'); }
+      complete: () => {
+        this.loading = false;
+        console.table(this.assuntos);
+        console.timeEnd('GetAll Subjects');
+      },
     });
   }
 
@@ -40,14 +46,16 @@ export class SubjectlistComponent {
       next: (response: Subject[]) => {
         console.log('delete===>', response);
       },
-      error: (error: any) => {
+      error: (error) => {
         console.log('delteerror===>', error);
       },
-      complete: () => { this.getList(); }
+      complete: () => {
+        this.getList();
+      },
     });
   }
 
   update(subject: Subject) {
-    this.router.navigateByUrl("/subject/" + subject.subjectId)
+    this.router.navigateByUrl('/subject/' + subject.subjectId);
   }
 }

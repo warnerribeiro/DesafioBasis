@@ -11,14 +11,14 @@ export class BookService {
 
   baseUrl: string = Config.urlApi + 'book/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   getAll(): Observable<Book[]> {
     return this.http.get<Book[]>(this.baseUrl);
   }
 
   get(id: number): Observable<Book> {
-    var url = this.baseUrl + id;
+    const url = this.baseUrl + id;
     return this.http.get<Book>(url);
   }
 
@@ -27,12 +27,12 @@ export class BookService {
   }
 
   put(id: number, assunto: Book): Observable<Book> {
-    var url = this.baseUrl + id;
+    const url = this.baseUrl + id;
     return this.http.put<Book>(url, assunto);
   }
 
   delete(id: number): Observable<any> {
-    var url: string = this.baseUrl + id;
+    const url: string = this.baseUrl + id;
     return this.http.delete(url);
   }
 }

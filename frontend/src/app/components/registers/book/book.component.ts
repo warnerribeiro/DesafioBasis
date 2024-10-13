@@ -32,7 +32,7 @@ export class BookComponent {
   public origin!: Origin[];
   public bookvalue: BookValue[] = [];
 
-  protected form: any = this.formBuilder.group(
+  protected form = this.formBuilder.group(
     {
       title: this.formBuilder.control('', {
         validators: [Validators.required],
@@ -84,7 +84,7 @@ export class BookComponent {
           this.form.get('bookSubject')?.setValue(response.bookSubject.map(a => a.subjectId.toString()));
           this.bookvalue = response.bookValue;
         },
-        error: (error: any) => {
+        error: (error) => {
           console.log('Error getting the author!', error);
         },
         complete: () => { }
@@ -97,7 +97,7 @@ export class BookComponent {
       next: (response: Author[]) => {
         this.autor = response;
       },
-      error: (error: any) => {
+      error: (error) => {
         console.log('Error getting the author!', error);
       },
       complete: () => { }
@@ -109,7 +109,7 @@ export class BookComponent {
       next: (response: Origin[]) => {
         this.origin = response;
       },
-      error: (error: any) => {
+      error: (error) => {
         console.log('Error getting the origin!', error);
       },
       complete: () => { }
@@ -121,7 +121,7 @@ export class BookComponent {
       next: (response: Subject[]) => {
         this.assunto = response;
       },
-      error: (error: any) => {
+      error: (error) => {
         console.log('Error getting the subject!', error);
       },
       complete: () => { }
@@ -129,7 +129,7 @@ export class BookComponent {
   }
 
   onSubmit() {
-    var book: Book = {
+    const book: Book = {
       bookId: this.id,
       title: this.form.value.title,
       publisher: this.form.value.publisher,
@@ -160,7 +160,7 @@ export class BookComponent {
         this.livro = response;
         this.router.navigateByUrl("/booklist")
       },
-      error: (error: any) => {
+      error: (error) => {
         console.log('Error saving the book!', error);
       },
       complete: () => { }
@@ -174,7 +174,7 @@ export class BookComponent {
         this.livro = response;
         this.router.navigateByUrl("/booklist")
       },
-      error: (error: any) => {
+      error: (error) => {
         console.log('Error updating the book', error);
       },
       complete: () => { }
@@ -183,16 +183,16 @@ export class BookComponent {
 
   addOriginValue() {
 
-    var name = this.origin.filter(a => a.originPurchaseId == this.form.value.origin)[0].name;
+    const name = this.origin.filter(a => a.originPurchaseId == this.form.value.origin)[0].name;
 
-    var bookvalue: BookValue = {
+    const bookvalue: BookValue = {
       bookId: this.id ?? 0,
       originPurchaseId: this.form.value.origin,
       originName: name,
       value: this.form.value.value
     }
 
-    var exist = this.bookvalue.filter(a => a.originPurchaseId == this.form.value.origin);
+    const exist = this.bookvalue.filter(a => a.originPurchaseId == this.form.value.origin);
 
     if (!exist.length) {
       this.bookvalue.push(bookvalue);
@@ -201,7 +201,7 @@ export class BookComponent {
 
   removeOriginValue(id: number) {
 
-    var remove = this.bookvalue.filter(a => a.originPurchaseId == id)[0];
+    const remove = this.bookvalue.filter(a => a.originPurchaseId == id)[0];
 
     const index = this.bookvalue.indexOf(remove, 0);
     if (index > -1) {

@@ -11,14 +11,14 @@ export class SubjectService {
 
   baseUrl: string = Config.urlApi + 'subject/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   getAll(): Observable<Subject[]> {
     return this.http.get<Subject[]>(this.baseUrl);
   }
 
   get(id: number): Observable<Subject> {
-    var url = this.baseUrl + id;
+    const url = this.baseUrl + id;
     return this.http.get<Subject>(url);
   }
 
@@ -27,12 +27,12 @@ export class SubjectService {
   }
 
   put(id: number, assunto: Subject): Observable<Subject> {
-    var url = this.baseUrl + id;
+    const url = this.baseUrl + id;
     return this.http.put<Subject>(url, assunto);
   }
 
   delete(id: number): Observable<any> {
-    var url: string = this.baseUrl + id;
+    const url: string = this.baseUrl + id;
     return this.http.delete(url);
   }
 }

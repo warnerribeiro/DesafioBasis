@@ -10,14 +10,14 @@ import * as Config from '../config';
 export class OriginService {
   baseUrl: string = Config.urlApi + 'originpurchase/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
   getAll(): Observable<Origin[]> {
     return this.http.get<Origin[]>(this.baseUrl);
   }
 
   get(id: number): Observable<Origin> {
-    var url = this.baseUrl + id;
+    const url = this.baseUrl + id;
     return this.http.get<Origin>(url);
   }
 
@@ -26,12 +26,12 @@ export class OriginService {
   }
 
   put(id: number, assunto: Origin): Observable<Origin> {
-    var url = this.baseUrl + id;
+    const url = this.baseUrl + id;
     return this.http.put<Origin>(url, assunto);
   }
 
   delete(id: number): Observable<any> {
-    var url: string = this.baseUrl + id;
+    const url: string = this.baseUrl + id;
     return this.http.delete(url);
   }
 }
