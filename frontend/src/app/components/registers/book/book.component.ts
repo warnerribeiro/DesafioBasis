@@ -14,7 +14,7 @@ import { SubjectService } from 'src/app/services/subject.service';
 @Component({
   selector: 'app-book',
   templateUrl: './book.component.html',
-  styleUrls: ['./book.component.css']
+  styleUrls: ['./book.component.css'],
 })
 export class BookComponent {
   private readonly formBuilder = inject(FormBuilder);
@@ -32,38 +32,34 @@ export class BookComponent {
   public origin!: Origin[];
   public bookvalue: BookValue[] = [];
 
-  protected form = this.formBuilder.group(
-    {
-      title: this.formBuilder.control('', {
-        validators: [Validators.required],
-        nonNullable: true
-      }),
-      publisher: this.formBuilder.control('', {
-        validators: [Validators.required],
-        nonNullable: true
-      }),
-      edition: this.formBuilder.control('', {
-        validators: [Validators.required],
-        nonNullable: true
-      }),
-      yearOfPublication: this.formBuilder.control('', {
-        validators: [Validators.required,],
-        nonNullable: true
-      }),
-      bookAuthor: this.formBuilder.control('', {
-        validators: [Validators.required],
-        nonNullable: true
-      }),
-      bookSubject: this.formBuilder.control('', {
-        validators: [Validators.required],
-        nonNullable: true
-      }),
-      origin: this.formBuilder.control('', {
-      }),
-      value: this.formBuilder.control('', {
-      }),
-    }
-  );
+  protected form = this.formBuilder.group({
+    title: this.formBuilder.control('', {
+      validators: [Validators.required],
+      nonNullable: true,
+    }),
+    publisher: this.formBuilder.control('', {
+      validators: [Validators.required],
+      nonNullable: true,
+    }),
+    edition: this.formBuilder.control('', {
+      validators: [Validators.required],
+      nonNullable: true,
+    }),
+    yearOfPublication: this.formBuilder.control('', {
+      validators: [Validators.required],
+      nonNullable: true,
+    }),
+    bookAuthor: this.formBuilder.control([''], {
+      validators: [Validators.required],
+      nonNullable: true,
+    }),
+    bookSubject: this.formBuilder.control([''], {
+      validators: [Validators.required],
+      nonNullable: true,
+    }),
+    origin: this.formBuilder.control('', {}),
+    value: this.formBuilder.control('', {}),
+  });
 
   ngOnInit() {
     this.getListOrigin();
@@ -72,22 +68,31 @@ export class BookComponent {
 
     const id = Number(this.route.snapshot.paramMap.get('id'));
 
+    
+
     if (id) {
       this.bookService.get(id).subscribe({
         next: (response: Book) => {
           this.id = response.bookId ?? 0;
           this.form.get('title')?.setValue(response.title);
           this.form.get('publisher')?.setValue(response.publisher);
-          this.form.get('edition')?.setValue(response.edition);
-          this.form.get('yearOfPublication')?.setValue(response.yearOfPublication);
-          this.form.get('bookAuthor')?.setValue(response.bookAuthor.map(a => a.authorId.toString()));
-          this.form.get('bookSubject')?.setValue(response.bookSubject.map(a => a.subjectId.toString()));
+          this.form.get('edition')?.setValue(response.edition.toString());
+          this.form
+            .get('yearOfPublication')
+            ?.setValue(response.yearOfPublication);
+          this.form
+            .get('bookAuthor')
+            ?.setValue(response.bookAuthor.map((a) => a.authorId.toString()));
+          this.form
+            .get('bookSubject')
+            ?.setValue(response.bookSubject.map((a) => a.subjectId.toString()));
           this.bookvalue = response.bookValue;
+          console.log(response.bookValue);
         },
         error: (error) => {
           console.log('Error getting the author!', error);
         },
-        complete: () => { }
+        complete: () => {},
       });
     }
   }
@@ -100,7 +105,7 @@ export class BookComponent {
       error: (error) => {
         console.log('Error getting the author!', error);
       },
-      complete: () => { }
+      complete: () => {},
     });
   }
 
@@ -112,7 +117,7 @@ export class BookComponent {
       error: (error) => {
         console.log('Error getting the origin!', error);
       },
-      complete: () => { }
+      complete: () => {},
     });
   }
 
@@ -124,27 +129,28 @@ export class BookComponent {
       error: (error) => {
         console.log('Error getting the subject!', error);
       },
-      complete: () => { }
+      complete: () => {},
     });
   }
 
   onSubmit() {
+
     const book: Book = {
       bookId: this.id,
-      title: this.form.value.title,
-      publisher: this.form.value.publisher,
-      edition: this.form.value.edition,
-      yearOfPublication: this.form.value.yearOfPublication.toString(),
-      bookAuthor: this.form.value.bookAuthor.map((i: number) => ({
+      title: this.form.value.title ?? '',
+      publisher: this.form.value.publisher ?? '',
+      edition: parseInt(this.form.value.edition ?? '', 10),
+      yearOfPublication: this.form.value.yearOfPublication?.toString() ?? '',
+      bookAuthor: this.form.value.bookAuthor?.map((i: string) => ({
         authorId: +i,
-        bookId: this.id
-      })),
-      bookSubject: this.form.value.bookSubject.map((i: number) => ({
+        bookId: this.id,
+      })) ?? [],
+      bookSubject: this.form.value.bookSubject?.map((i: string) => ({
         subjectId: +i,
-        bookId: this.id
-      })),
+        bookId: this.id,
+      })) ?? [],
       bookValue: this.bookvalue,
-    }
+    };
 
     if (this.id) {
       this.update(book);
@@ -158,12 +164,12 @@ export class BookComponent {
       next: (response: Book) => {
         console.log('Book salved!', response);
         this.livro = response;
-        this.router.navigateByUrl("/booklist")
+        this.router.navigateByUrl('/booklist');
       },
       error: (error) => {
         console.log('Error saving the book!', error);
       },
-      complete: () => { }
+      complete: () => {},
     });
   }
 
@@ -172,27 +178,30 @@ export class BookComponent {
       next: (response: Book) => {
         console.log('Book updated!', response);
         this.livro = response;
-        this.router.navigateByUrl("/booklist")
+        this.router.navigateByUrl('/booklist');
       },
       error: (error) => {
         console.log('Error updating the book', error);
       },
-      complete: () => { }
+      complete: () => {},
     });
   }
 
   addOriginValue() {
-
-    const name = this.origin.filter(a => a.originPurchaseId == this.form.value.origin)[0].name;
+    const name = this.origin.filter(
+      (a) => a.originPurchaseId == parseInt(this.form.value.origin ?? '', 10)
+    )[0].name;
 
     const bookvalue: BookValue = {
       bookId: this.id ?? 0,
-      originPurchaseId: this.form.value.origin,
+      originPurchaseId: parseInt(this.form.value.origin ?? '', 10),
       originName: name,
-      value: this.form.value.value
-    }
+      value: parseInt(this.form.value.value ?? '', 10),
+    };
 
-    const exist = this.bookvalue.filter(a => a.originPurchaseId == this.form.value.origin);
+    const exist = this.bookvalue.filter(
+      (a) => a.originPurchaseId == parseInt(this.form.value.origin ?? "",10)
+    );
 
     if (!exist.length) {
       this.bookvalue.push(bookvalue);
@@ -200,8 +209,7 @@ export class BookComponent {
   }
 
   removeOriginValue(id: number) {
-
-    const remove = this.bookvalue.filter(a => a.originPurchaseId == id)[0];
+    const remove = this.bookvalue.filter((a) => a.originPurchaseId == id)[0];
 
     const index = this.bookvalue.indexOf(remove, 0);
     if (index > -1) {

@@ -45,9 +45,10 @@ export class AuthorComponent {
   }
 
   onSubmit() {
-
-    const author: Author = this.form.value;
-    author.authorId = this.id ?? 0;
+    const author: Author = {
+      authorId: this.id ?? 0,
+      name: this.form.value.name ?? ""
+    }
 
     if (this.id) {
       this.update(author);

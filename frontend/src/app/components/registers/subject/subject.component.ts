@@ -46,8 +46,10 @@ export class SubjectComponent {
   }
 
   onSubmit() {
-    const subject: Subject = this.form.value;
-    subject.subjectId = this.id ?? 0;
+    const subject: Subject = {
+      subjectId: this.id ?? 0,
+      description: this.form.value.description ?? ""
+    }
 
     if (this.id) {
       this.update(subject);

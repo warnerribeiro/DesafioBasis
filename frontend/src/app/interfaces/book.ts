@@ -1,6 +1,4 @@
-import { Author } from "./author";
 import { BookValue } from "./bookvalue";
-import { Subject } from "./subject";
 
 export interface Book {
     bookId: number;
@@ -8,7 +6,7 @@ export interface Book {
     publisher: string;
     edition: number;
     yearOfPublication: string;
-    bookAuthor: Author[];
-    bookSubject: Subject[];
+    bookAuthor: {authorId: number, bookId: number}[];
+    bookSubject: {subjectId: number, bookId: number}[];
     bookValue: BookValue[];
 }

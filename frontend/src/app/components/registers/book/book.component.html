@@ -198,7 +198,7 @@
         <div class="col-1 align-self-end">
           <button
             [disabled]="
-              !form?.controls?.value?.value || !form?.controls?.origin?.value
+              !form.controls.value.value || !form.controls.origin.value
             "
             class="btn btn-primary"
             placement="right"
@@ -224,7 +224,6 @@
                 <tr *ngFor="let item of bookvalue">
                   <td>{{ item.originName }}</td>
                   <td>R$ {{ item.value }}</td>
-                  <!-- <td><button class="btn btn-secondary btn-sm"  (click)="update(item.bookId)"><i class="bi bi-pencil"></i> Editar</button></td> -->
                   <td>
                     <button
                       class="btn btn-outline-danger btn-sm"
