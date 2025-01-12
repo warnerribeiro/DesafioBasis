@@ -17,6 +17,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{706FE1FC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.UnitTest", "WebApi.Test\WebApi.UnitTest.csproj", "{8F90E82A-8DD9-415A-A338-9E2A765D995C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Load and Stress", "Load and Stress", "{8C75BAF9-E641-4BEB-AB81-035051FE4D8F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadStressTest", "LoadStressTest\LoadStressTest.csproj", "{E45957F4-291F-4605-A673-FE9BA445B3B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,12 +66,19 @@ Global
 		{8F90E82A-8DD9-415A-A338-9E2A765D995C}.DebugLocal|Any CPU.Build.0 = Debug|Any CPU
 		{8F90E82A-8DD9-415A-A338-9E2A765D995C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F90E82A-8DD9-415A-A338-9E2A765D995C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E45957F4-291F-4605-A673-FE9BA445B3B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E45957F4-291F-4605-A673-FE9BA445B3B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E45957F4-291F-4605-A673-FE9BA445B3B7}.DebugLocal|Any CPU.ActiveCfg = Debug|Any CPU
+		{E45957F4-291F-4605-A673-FE9BA445B3B7}.DebugLocal|Any CPU.Build.0 = Debug|Any CPU
+		{E45957F4-291F-4605-A673-FE9BA445B3B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E45957F4-291F-4605-A673-FE9BA445B3B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8F90E82A-8DD9-415A-A338-9E2A765D995C} = {706FE1FC-0C36-46F1-8FE4-2E52F6ED35A4}
+		{E45957F4-291F-4605-A673-FE9BA445B3B7} = {8C75BAF9-E641-4BEB-AB81-035051FE4D8F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4CDFE705-1C0B-49D0-A913-E6E2C6933A50}
